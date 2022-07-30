@@ -1,6 +1,6 @@
 {
   "name": "multiversus.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -8,5 +8,13 @@
   "license": "ISC",
   "dependencies": {
     "node-fetch": "^3.2.9"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElijahPepe/multiversus.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ElijahPepe/multiversus.js/issues"
+  },
+  "homepage": "https://github.com/ElijahPepe/multiversus.js"
 }
