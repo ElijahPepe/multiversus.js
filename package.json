@@ -1,0 +1,12 @@
+{
+  "name": "multiversus.js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "author": "Elijah Conners <business@elijahpepe.com>",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^3.2.9"
+  }
+}
