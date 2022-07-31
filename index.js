@@ -10,83 +10,92 @@ export class Client {
 		this.userAgent = userAgent || 'Hydra-Cpp/1.132.0';
 	}
 
-	searchByUsername(username, limit) {
-		if (!limit) {
-			limit = 25;
-		}
-		if (!username) {
-			throw new Error('A query must be provided.')
-		}
-		const data = fetch(base + `/profiles/search_queries/get-by-username/run?username=${username}&limit=${limit}`, {
-			headers: {
-				'x-hydra-access-token': this.accessToken,
-				'x-hydra-api-key': this.apiKey,
-				'x-hydra-client-id': this.clientId,
-				'x-hydra-user-agent': this.userAgent
-			}
-		}).then(res => {
-			if (res.status === 403) {
-				throw new Error('Invalid Access Token')
+	handleData(data, resolve, reject) {
+		data.then(res => {
+			if (res.status === 404) {
+				return reject(new Error(`'${id}' is not a valid account_id`))
+			} else if (res.status === 403) {
+				return reject(new Error('Invalid Access Token'))
 			} else if (res.status === 401) {
-				throw new Error('User session kicked')
+				return reject(new Error('User session kicked'))
 			}
 			return res.text();
 		}).then(json => {
-			return json;
+			return resolve(JSON.parse(json));
 		})
+	}
 
-		return data
+	searchByUsername(username, limit) {
+		return new Promise((resolve, reject) => {
+			if (!limit) {
+				limit = 25;
+			}
+			if (!username) {
+				throw new Error('A query must be provided.')
+			}
+			const data = fetch(base + `/profiles/search_queries/get-by-username/run?username=${username}&limit=${limit}`, {
+				headers: {
+					'x-hydra-access-token': this.accessToken,
+					'x-hydra-api-key': this.apiKey,
+					'x-hydra-client-id': this.clientId,
+					'x-hydra-user-agent': this.userAgent
+				}
+			})
+			this.handleData(data, resolve, reject);
+		});
 	}
 
 	getProfile(id) {
-		if (!id) {
-			throw new Error('A user ID must be provided.')
-		}
-		const data = fetch(base + `/profiles/${id}`, {
-			headers: {
-				'x-hydra-access-token': this.accessToken,
-				'x-hydra-api-key': this.apiKey,
-				'x-hydra-client-id': this.clientId,
-				'x-hydra-user-agent': this.userAgent
+		return new Promise((resolve, reject) => {
+			if (!id) {
+				throw new Error('A user ID must be provided.')
 			}
-		}).then(res => {
-			if (res.status === 404) {
-				throw new Error(`'${id}' is not a valid account_id`)
-			} else if (res.status === 403) {
-				throw new Error('Invalid Access Token')
-			} else if (res.status === 401) {
-				throw new Error('User session kicked')
-			}
-			return res.text();
-		}).then(json => {
-			return json;
+			const data = fetch(base + `/profiles/${id}`, {
+				headers: {
+					'x-hydra-access-token': this.accessToken,
+					'x-hydra-api-key': this.apiKey,
+					'x-hydra-client-id': this.clientId,
+					'x-hydra-user-agent': this.userAgent
+				}
+			})
+			this.handleData(data, resolve, reject);
 		})
+	}
 
-		return data;
+	getProfileLeaderboard(id, type) {
+		return new Promise((resolve, reject) => {
+			if (type !== '2v2' && type !== '1v1') {
+				return reject(new Error('Leaderboard type must be 1v1 or 2v2.'));
+			}
+			if (!id) {
+				return reject(new Error('A user ID must be provided.'));
+			}
+			const data = fetch(base + `/leaderboards/${type}/score-and-rank/${id}`, {
+				headers: {
+					'x-hydra-access-token': this.accessToken,
+					'x-hydra-api-key': this.apiKey,
+					'x-hydra-client-id': this.clientId,
+					'x-hydra-user-agent': this.userAgent
+				}
+			})
+			this.handleData(data, resolve, reject);
+		});
 	}
 
 	getLeaderboard(type) {
-		if (type !== '2v2' && type !== '1v1') {
-			throw new Error('Leaderboard type must be 1v1 or 2v2.')
-		}
-		const data = fetch(base + `/leaderboards/${type}/show`, {
-			headers: {
-				'x-hydra-access-token': this.accessToken,
-				'x-hydra-api-key': this.apiKey,
-				'x-hydra-client-id': this.clientId,
-				'x-hydra-user-agent': this.userAgent
+		return new Promise((resolve, reject) => {
+			if (type !== '2v2' && type !== '1v1') {
+				throw new Error('Leaderboard type must be 1v1 or 2v2.')
 			}
-		}).then(res => {
-			if (res.status === 403) {
-				throw new Error('Invalid Access Token')
-			} else if (res.status === 401) {
-				throw new Error('User session kicked')
-			}
-			return res.text();
-		}).then(json => {
-			return json;
-		})
-
-		return data;
+			const data = fetch(base + `/leaderboards/${type}/show`, {
+				headers: {
+					'x-hydra-access-token': this.accessToken,
+					'x-hydra-api-key': this.apiKey,
+					'x-hydra-client-id': this.clientId,
+					'x-hydra-user-agent': this.userAgent
+				}
+			})
+			this.handleData(data, resolve, reject);
+		});
 	}
 }
