@@ -132,20 +132,6 @@ export class Client {
 		});
 	}
 
-	getAllMatches(page = 1) {
-		return new Promise((resolve, reject) => {
-			const data = fetch(base + `/matches/all?page=${page}`, {
-				headers: {
-					'x-hydra-access-token': this.accessToken,
-					'x-hydra-api-key': this.apiKey,
-					'x-hydra-client-id': this.clientId,
-					'x-hydra-user-agent': this.userAgent
-				}
-			})
-			this.handleData(data, resolve, reject);
-		});
-	}
-
 	getMatches(id, page = 1) {
 		return new Promise((resolve, reject) => {
 			if (!id) {
