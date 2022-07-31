@@ -38,6 +38,23 @@ export class Client {
 		});
 	}
 
+	getMatch(id) {
+		return new Promise((resolve, reject) => {
+			if (!id) {
+				throw new Error('A match ID must be provided.')
+			}
+			const data = fetch(base + `/matches/${id}`, {
+				headers: {
+					'x-hydra-access-token': this.accessToken,
+					'x-hydra-api-key': this.apiKey,
+					'x-hydra-client-id': this.clientId,
+					'x-hydra-user-agent': this.userAgent
+				}
+			})
+			this.handleData(data, resolve, reject);
+		})
+	}
+
 	getProfile(id) {
 		return new Promise((resolve, reject) => {
 			if (!id) {
