@@ -21,11 +21,8 @@ export class Client {
 		})
 	}
 
-	searchByUsername(username, limit) {
+	searchByUsername(username, limit = 25) {
 		return new Promise((resolve, reject) => {
-			if (!limit) {
-				limit = 25;
-			}
 			if (!username) {
 				throw new Error('A query must be provided.')
 			}
@@ -39,6 +36,23 @@ export class Client {
 			})
 			this.handleData(data, resolve, reject);
 		});
+	}
+
+	getMatch(id) {
+		return new Promise((resolve, reject) => {
+			if (!id) {
+				throw new Error('A match ID must be provided.')
+			}
+			const data = fetch(base + `/matches/${id}`, {
+				headers: {
+					'x-hydra-access-token': this.accessToken,
+					'x-hydra-api-key': this.apiKey,
+					'x-hydra-client-id': this.clientId,
+					'x-hydra-user-agent': this.userAgent
+				}
+			})
+			this.handleData(data, resolve, reject);
+		})
 	}
 
 	getProfile(id) {
