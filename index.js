@@ -12,15 +12,11 @@ export class Client {
 
 	handleData(data, resolve, reject) {
 		data.then(res => {
-			if (res.status === 404) {
-				return reject(new Error("Not found"))
-			} else if (res.status === 403) {
-				return reject(new Error('Invalid Access Token'))
-			} else if (res.status === 401) {
-				return reject(new Error('User session kicked'))
-			}
 			return res.text();
 		}).then(json => {
+			if (JSON.parse(json).msg) {
+				return reject(new Error(JSON.parse(json).msg));
+			}
 			return resolve(JSON.parse(json));
 		})
 	}
