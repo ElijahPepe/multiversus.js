@@ -12,5 +12,5 @@ try {
 	console.log(userId)
 	assert.strictEqual(userData.account_id, userId);
 } catch (err) {
-	console.error(error);
+	console.error(err);
 }
