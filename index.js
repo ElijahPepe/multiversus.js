@@ -13,7 +13,7 @@ export class Client {
 	handleData(data, resolve, reject) {
 		data.then(res => {
 			if (res.status === 404) {
-				return reject(new Error(`'${id}' is not a valid account_id`))
+				return reject(new Error("Not found"))
 			} else if (res.status === 403) {
 				return reject(new Error('Invalid Access Token'))
 			} else if (res.status === 401) {
@@ -85,9 +85,27 @@ export class Client {
 	getLeaderboard(type) {
 		return new Promise((resolve, reject) => {
 			if (type !== '2v2' && type !== '1v1') {
-				throw new Error('Leaderboard type must be 1v1 or 2v2.')
+				return reject(new Error('Leaderboard type must be 1v1 or 2v2.'));
 			}
 			const data = fetch(base + `/leaderboards/${type}/show`, {
+				headers: {
+					'x-hydra-access-token': this.accessToken,
+					'x-hydra-api-key': this.apiKey,
+					'x-hydra-client-id': this.clientId,
+					'x-hydra-user-agent': this.userAgent
+				}
+			})
+			this.handleData(data, resolve, reject);
+		});
+	}
+
+	getMatches(id)
+	{
+		return new Promise((resolve, reject) => {
+			if (!id) {
+				return reject(new Error('A user ID must be provided.'));
+			}
+			const data = fetch(base + `/matches/all/${id}`, {
 				headers: {
 					'x-hydra-access-token': this.accessToken,
 					'x-hydra-api-key': this.apiKey,
