@@ -1,20 +1,29 @@
 {
-  "name": "multiversus.js",
-  "version": "1.0.4",
-  "description": "",
-  "main": "index.js",
-  "type": "module",
-  "author": "Elijah Conners <business@elijahpepe.com>",
-  "license": "ISC",
-  "dependencies": {
-    "node-fetch": "^3.2.9"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ElijahPepe/multiversus.js.git"
-  },
-  "bugs": {
-    "url": "https://github.com/ElijahPepe/multiversus.js/issues"
-  },
-  "homepage": "https://github.com/ElijahPepe/multiversus.js"
+	"name": "multiversus.js",
+	"version": "1.0.4",
+	"description": "",
+	"main": "index.js",
+	"type": "module",
+	"author": "Elijah Conners <business@elijahpepe.com>",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ElijahPepe/multiversus.js.git"
+	},
+	"bugs": {
+		"url": "https://github.com/ElijahPepe/multiversus.js/issues"
+	},
+	"homepage": "https://multiversus.js.org",
+	"dependencies": {
+		"node-fetch": "^3.2.9"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^17.0.3",
+		"@commitlint/config-angular": "^17.0.3",
+		"eslint": "^8.20.0",
+		"eslint-config-prettier": "^8.5.0",
+		"husky": "^8.0.1",
+		"lint-staged": "^13.0.3",
+		"prettier": "^2.7.1"
+	}
 }
