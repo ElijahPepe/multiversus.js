@@ -21,11 +21,8 @@ export class Client {
 		})
 	}
 
-	searchByUsername(username, limit) {
+	searchByUsername(username, limit = 25) {
 		return new Promise((resolve, reject) => {
-			if (!limit) {
-				limit = 25;
-			}
 			if (!username) {
 				throw new Error('A query must be provided.')
 			}
