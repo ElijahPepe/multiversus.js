@@ -5,12 +5,38 @@ import { fetch } from 'undici';
 const base = 'https://dokken-api.wbagora.com';
 
 export class Client {
-	constructor(accessToken, apiKey, clientId, userAgent) {
-		this.accessToken = accessToken;
+	constructor(steamTicket, apiKey, clientId, userAgent) {
+		this.steamTicket = steamTicket;
 		this.apiKey = apiKey;
 		this.clientId = clientId;
 		this.userAgent = userAgent || 'Hydra-Cpp/1.132.0';
 	}
+
+    auth() {
+        return new Promise(async (resolve, reject) => {
+			const data = await fetch(base + `/access`, {
+                method: "POST",
+				headers: {
+					'x-hydra-api-key': this.apiKey,
+					'x-hydra-client-id': this.clientId,
+					'x-hydra-user-agent': this.userAgent,
+                    "Content-Type": "application/json"
+				},
+                body: JSON.stringify({
+                    auth: {
+                        fail_on_missing: false,
+                        steam: this.steamTicket,
+                    },
+                    options: ['configuration', 'achievements', 'account', 'profile', 'notifications', 'maintenance', 'wb_network'],
+                })
+			}).then(async (res) => {
+				return await res.json();
+			});
+            if(data.msg) return reject(new Error(data.msg));
+			this.accessToken = data.token
+            return resolve(this);
+		});
+    }
 
 	handleData(data, resolve, reject) {
 		data
