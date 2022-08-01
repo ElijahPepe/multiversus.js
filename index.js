@@ -1,6 +1,8 @@
-import fetch from 'node-fetch';
+'use strict';
 
-const base = 'https://dokken-api.wbagora.com'
+import { fetch } from 'undici';
+
+const base = 'https://dokken-api.wbagora.com';
 
 export class Client {
 	constructor(accessToken, apiKey, clientId, userAgent) {
@@ -11,29 +13,31 @@ export class Client {
 	}
 
 	handleData(data, resolve, reject) {
-		data.then(res => {
-			return res.text();
-		}).then(json => {
-			if (JSON.parse(json).msg) {
-				return reject(new Error(JSON.parse(json).msg));
-			}
-			return resolve(JSON.parse(json));
-		})
+		data
+			.then((res) => {
+				return res.text();
+			})
+			.then((json) => {
+				if (JSON.parse(json).msg) {
+					return reject(new Error(JSON.parse(json).msg));
+				}
+				return resolve(JSON.parse(json));
+			});
 	}
 
 	searchByUsername(username, limit = 25) {
 		return new Promise((resolve, reject) => {
 			if (!username) {
-				throw new Error('A query must be provided.')
+				throw new Error('A query must be provided.');
 			}
 			const data = fetch(base + `/profiles/search_queries/get-by-username/run?username=${username}&limit=${limit}`, {
 				headers: {
 					'x-hydra-access-token': this.accessToken,
 					'x-hydra-api-key': this.apiKey,
 					'x-hydra-client-id': this.clientId,
-					'x-hydra-user-agent': this.userAgent
-				}
-			})
+					'x-hydra-user-agent': this.userAgent,
+				},
+			});
 			this.handleData(data, resolve, reject);
 		});
 	}
@@ -41,35 +45,35 @@ export class Client {
 	getMatch(id) {
 		return new Promise((resolve, reject) => {
 			if (!id) {
-				throw new Error('A match ID must be provided.')
+				throw new Error('A match ID must be provided.');
 			}
 			const data = fetch(base + `/matches/${id}`, {
 				headers: {
 					'x-hydra-access-token': this.accessToken,
 					'x-hydra-api-key': this.apiKey,
 					'x-hydra-client-id': this.clientId,
-					'x-hydra-user-agent': this.userAgent
-				}
-			})
+					'x-hydra-user-agent': this.userAgent,
+				},
+			});
 			this.handleData(data, resolve, reject);
-		})
+		});
 	}
 
 	getProfile(id) {
 		return new Promise((resolve, reject) => {
 			if (!id) {
-				throw new Error('A user ID must be provided.')
+				throw new Error('A user ID must be provided.');
 			}
 			const data = fetch(base + `/profiles/${id}`, {
 				headers: {
 					'x-hydra-access-token': this.accessToken,
 					'x-hydra-api-key': this.apiKey,
 					'x-hydra-client-id': this.clientId,
-					'x-hydra-user-agent': this.userAgent
-				}
-			})
+					'x-hydra-user-agent': this.userAgent,
+				},
+			});
 			this.handleData(data, resolve, reject);
-		})
+		});
 	}
 
 	getProfileLeaderboard(id, type) {
@@ -85,9 +89,9 @@ export class Client {
 					'x-hydra-access-token': this.accessToken,
 					'x-hydra-api-key': this.apiKey,
 					'x-hydra-client-id': this.clientId,
-					'x-hydra-user-agent': this.userAgent
-				}
-			})
+					'x-hydra-user-agent': this.userAgent,
+				},
+			});
 			this.handleData(data, resolve, reject);
 		});
 	}
@@ -108,9 +112,9 @@ export class Client {
 					'x-hydra-access-token': this.accessToken,
 					'x-hydra-api-key': this.apiKey,
 					'x-hydra-client-id': this.clientId,
-					'x-hydra-user-agent': this.userAgent
-				}
-			})
+					'x-hydra-user-agent': this.userAgent,
+				},
+			});
 			this.handleData(data, resolve, reject);
 		});
 	}
@@ -125,9 +129,9 @@ export class Client {
 					'x-hydra-access-token': this.accessToken,
 					'x-hydra-api-key': this.apiKey,
 					'x-hydra-client-id': this.clientId,
-					'x-hydra-user-agent': this.userAgent
-				}
-			})
+					'x-hydra-user-agent': this.userAgent,
+				},
+			});
 			this.handleData(data, resolve, reject);
 		});
 	}
@@ -142,9 +146,9 @@ export class Client {
 					'x-hydra-access-token': this.accessToken,
 					'x-hydra-api-key': this.apiKey,
 					'x-hydra-client-id': this.clientId,
-					'x-hydra-user-agent': this.userAgent
-				}
-			})
+					'x-hydra-user-agent': this.userAgent,
+				},
+			});
 			this.handleData(data, resolve, reject);
 		});
 	}
@@ -152,108 +156,104 @@ export class Client {
 
 export class CharacterData {
 	static Shaggy = {
-		"id": "character_shaggy",
-		"displayName": "Shaggy",
-		"aliases": []
-	}
+		id: 'character_shaggy',
+		displayName: 'Shaggy',
+		aliases: [],
+	};
 
 	static WonderWoman = {
-		"id": "character_wonder_woman",
-		"displayName": "Wonder Woman",
-		"aliases": []
-	}
+		id: 'character_wonder_woman',
+		displayName: 'Wonder Woman',
+		aliases: [],
+	};
 
 	static Batman = {
-		"id": "character_batman",
-		"displayName": "Batman",
-		"aliases": []
-	}
+		id: 'character_batman',
+		displayName: 'Batman',
+		aliases: [],
+	};
 
 	static Superman = {
-		"id": "character_superman",
-		"displayName": "Superman",
-		"aliases": []
-	}
+		id: 'character_superman',
+		displayName: 'Superman',
+		aliases: [],
+	};
 
 	static Taz = {
-		"id": "character_taz",
-		"displayName": "Taz",
-		"aliases": []
-	}
+		id: 'character_taz',
+		displayName: 'Taz',
+		aliases: [],
+	};
 
 	static IronGiant = {
-		"id": "character_C017",
-		"displayName": "Iron Giant",
-		"aliases": []
-	}
+		id: 'character_C017',
+		displayName: 'Iron Giant',
+		aliases: [],
+	};
 
 	static Garnet = {
-		"id": "character_garnet",
-		"displayName": "Garnet",
-		"aliases": []
-	}
+		id: 'character_garnet',
+		displayName: 'Garnet',
+		aliases: [],
+	};
 
 	static StevenUniverse = {
-		"id": "character_steven",
-		"displayName": "Steven Universe",
-		"aliases": []
-	}
+		id: 'character_steven',
+		displayName: 'Steven Universe',
+		aliases: [],
+	};
 
 	static Jake = {
-		"id": "character_jake",
-		"displayName": "Jake the Dog",
-		"aliases": [
-			"Jake"
-		]
-	}
+		id: 'character_jake',
+		displayName: 'Jake the Dog',
+		aliases: ['Jake'],
+	};
 
 	static Reindog = {
-		"id": "character_creature",
-		"displayName": "Reindog",
-		"aliases": []
-	}
+		id: 'character_creature',
+		displayName: 'Reindog',
+		aliases: [],
+	};
 
 	static Finn = {
-		"id": "character_finn",
-		"displayName": "Finn the Human",
-		"aliases": [
-			"Finn"
-		]
-	}
+		id: 'character_finn',
+		displayName: 'Finn the Human',
+		aliases: ['Finn'],
+	};
 
 	static Velma = {
-		"id": "character_velma",
-		"displayName": "Velma",
-		"aliases": []
-	}
+		id: 'character_velma',
+		displayName: 'Velma',
+		aliases: [],
+	};
 
 	static AryaStark = {
-		"id": "character_arya",
-		"displayName": "Arya Stark",
-		"aliases": []
-	}
+		id: 'character_arya',
+		displayName: 'Arya Stark',
+		aliases: [],
+	};
 
 	static BugsBunny = {
-		"id": "character_bugs_bunny",
-		"displayName": "Bugs Bunny",
-		"aliases": []
-	}
+		id: 'character_bugs_bunny',
+		displayName: 'Bugs Bunny',
+		aliases: [],
+	};
 
 	static HarleyQuinn = {
-		"id": "character_harleyquinn",
-		"displayName": "Harley Quinn",
-		"aliases": []
-	}
+		id: 'character_harleyquinn',
+		displayName: 'Harley Quinn',
+		aliases: [],
+	};
 
 	static TomAndJerry = {
-		"id": "character_tom_and_jerry",
-		"displayName": "Tom and Jerry",
-		"aliases": []
-	}
+		id: 'character_tom_and_jerry',
+		displayName: 'Tom and Jerry',
+		aliases: [],
+	};
 
 	static LeBronJames = {
-		"id": "character_c16",
-		"displayName": "LeBron James",
-		"aliases": []
-	}
+		id: 'character_c16',
+		displayName: 'LeBron James',
+		aliases: [],
+	};
 }
