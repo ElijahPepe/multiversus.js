@@ -136,6 +136,30 @@ export class Client {
 		});
 	}
 
+	getLeaderboardForCharacter(type, character) {
+		return new Promise((resolve, reject) => {
+			if (!this.ready) {
+				return reject(new Error('Client is not ready.'));
+			}
+
+			if (type !== '2v2' && type !== '1v1') {
+				return reject(new Error('Leaderboard type must be 1v1 or 2v2.'));
+			}
+			if (!character) {
+				return reject(new Error('A character must be provided.'));
+			}
+			const data = fetch(base + `/leaderboards/${character}_${type}/show`, {
+				headers: {
+					'x-hydra-access-token': this.accessToken,
+					'x-hydra-api-key': this.apiKey,
+					'x-hydra-client-id': this.clientId,
+					'x-hydra-user-agent': this.userAgent
+				}
+			});
+			this.handleData(data, resolve, reject);
+		});
+	}
+
 	getMatches(id, page = 1) {
 		return new Promise((resolve, reject) => {
 			if (!id) {
