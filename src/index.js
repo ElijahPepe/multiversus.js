@@ -199,6 +199,42 @@ export class Client {
 			this.handleData(data, resolve, reject);
 		});
 	}
+
+	getBattlepass(id) {
+		return new Promise(async (resolve, reject) => {
+			if (!id) {
+				throw new Error('A user ID must be provided.');
+			}
+			const data = await this.fetchData({
+				url: `${base}/ssc/invoke/get_battlepass?AccountID=${id}`,
+			});
+			this.handleData(data, resolve, reject);
+		});
+	}
+
+	getQuests(id) {
+		return new Promise(async (resolve, reject) => {
+			if (!id) {
+				throw new Error('A user ID must be provided.');
+			}
+			const data = await this.fetchData({
+				url: `${base}/ssc/invoke/get_quests?AccountID=${id}`,
+			});
+			this.handleData(data, resolve, reject);
+		});
+	}
+
+	getClan(id, page = 1, count = 25) {
+		return new Promise(async (resolve, reject) => {
+			if (!id) {
+				return reject(new Error('A user ID must be provided.'));
+			}
+			const data = await this.fetchData({
+				url: `${base}/clans/pfg-clan/for/${id}?count=${count}&page=${page}`,
+			});
+			this.handleData(data, resolve, reject);
+		});
+	}
 }
 
 export class CharacterData {
