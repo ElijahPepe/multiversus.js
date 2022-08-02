@@ -1,6 +1,7 @@
 'use strict';
 
 import { fetch } from 'undici';
+import { SteamUser } from 'steam-user';
 
 const base = 'https://dokken-api.wbagora.com';
 
@@ -10,6 +11,41 @@ export class Client {
 		this.apiKey = '51586fdcbd214feb84b0e475b130fce0';
 		this.clientId = clientId;
 		this.userAgent = 'Hydra-Cpp/1.132.0';
+	}
+
+	login(username, password) {
+		const steamUser = new SteamUser();
+		try {
+			steamUser.logOn({ accountName: username, password: password });
+		} catch (err) {
+			throw new Error('Invalid Steam username or password provided!');
+		}
+		steamUser.createEncryptedAppTicket(1818750, async (err, ticket) => {
+			if (err) {
+				throw new Error(err);
+			}
+			const data = await this.info(ticket.toString('hex'));
+			this.accessToken = data.token;
+		});
+	}
+
+	info(steamTicket) {
+		return new Promise((resolve, reject) => {
+			if (!steamTicket) {
+				throw new Error('A Steam ticket must be provided.');
+			}
+			const data = fetch(base + `/access`, {
+				headers: {
+					'x-hydra-api-key': this.apiKey,
+					'x-hydra-client-id': this.clientId,
+					'x-hydra-user-agent': this.userAgent,
+					'Content-Type': 'application/json',
+				},
+				method: 'POST',
+				body: JSON.stringify({ auth: { fail_on_missing: true, steam: steamToken } }),
+			});
+			this.handleData(data, resolve, reject);
+		});
 	}
 
 	handleData(data, resolve, reject) {
