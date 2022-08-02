@@ -1,16 +1,17 @@
 'use strict';
 
+import pkg from 'steam-user';
 import { fetch } from 'undici';
-import { SteamUser } from 'steam-user';
+import { base, apiKey, userAgent } from './utils/constants.js';
 
-const base = 'https://dokken-api.wbagora.com';
+const { SteamUser } = pkg;
 
 export class Client {
 	constructor(accessToken, clientId) {
 		this.accessToken = accessToken;
-		this.apiKey = '51586fdcbd214feb84b0e475b130fce0';
+		this.apiKey = apiKey;
 		this.clientId = clientId;
-		this.userAgent = 'Hydra-Cpp/1.132.0';
+		this.userAgent = userAgent;
 	}
 
 	login(username, password) {
@@ -34,7 +35,7 @@ export class Client {
 			if (!steamTicket) {
 				throw new Error('A Steam ticket must be provided.');
 			}
-			const data = fetch(base + `/access`, {
+			const data = fetch(`${base}/access`, {
 				headers: {
 					'x-hydra-api-key': this.apiKey,
 					'x-hydra-client-id': this.clientId,
@@ -43,7 +44,7 @@ export class Client {
 				},
 				method: 'POST',
 				body: JSON.stringify({
-					auth: { fail_on_missing: true, steam: steamToken },
+					auth: { fail_on_missing: true, steam: steamTicket },
 					options: [
 						'configuration',
 						'achievements',
@@ -61,9 +62,7 @@ export class Client {
 
 	handleData(data, resolve, reject) {
 		data
-			.then((res) => {
-				return res.text();
-			})
+			.then((res) => res.text())
 			.then((json) => {
 				if (JSON.parse(json).msg) {
 					return reject(new Error(JSON.parse(json).msg));
@@ -77,7 +76,7 @@ export class Client {
 			if (!username) {
 				throw new Error('A query must be provided.');
 			}
-			const data = fetch(base + `/profiles/search_queries/get-by-username/run?username=${username}&limit=${limit}`, {
+			const data = fetch(`${base}/profiles/search_queries/get-by-username/run?username=${username}&limit=${limit}`, {
 				headers: {
 					'x-hydra-access-token': this.accessToken,
 					'x-hydra-api-key': this.apiKey,
@@ -94,7 +93,7 @@ export class Client {
 			if (!id) {
 				throw new Error('A match ID must be provided.');
 			}
-			const data = fetch(base + `/matches/${id}`, {
+			const data = fetch(`${base}/matches/${id}`, {
 				headers: {
 					'x-hydra-access-token': this.accessToken,
 					'x-hydra-api-key': this.apiKey,
@@ -111,7 +110,7 @@ export class Client {
 			if (!id) {
 				throw new Error('A user ID must be provided.');
 			}
-			const data = fetch(base + `/profiles/${id}`, {
+			const data = fetch(`${base}/profiles/${id}`, {
 				headers: {
 					'x-hydra-access-token': this.accessToken,
 					'x-hydra-api-key': this.apiKey,
@@ -131,7 +130,7 @@ export class Client {
 			if (!id) {
 				return reject(new Error('A user ID must be provided.'));
 			}
-			const data = fetch(base + `/leaderboards/${type}/score-and-rank/${id}`, {
+			const data = fetch(`${base}/leaderboards/${type}/score-and-rank/${id}`, {
 				headers: {
 					'x-hydra-access-token': this.accessToken,
 					'x-hydra-api-key': this.apiKey,
@@ -154,7 +153,7 @@ export class Client {
 			if (!character) {
 				return reject(new Error('A character must be provided.'));
 			}
-			const data = fetch(base + `/leaderboards/${character}_${type}/score-and-rank/${id}`, {
+			const data = fetch(`${base}/leaderboards/${character}_${type}/score-and-rank/${id}`, {
 				headers: {
 					'x-hydra-access-token': this.accessToken,
 					'x-hydra-api-key': this.apiKey,
@@ -171,7 +170,7 @@ export class Client {
 			if (type !== '2v2' && type !== '1v1') {
 				return reject(new Error('Leaderboard type must be 1v1 or 2v2.'));
 			}
-			const data = fetch(base + `/leaderboards/${type}/show`, {
+			const data = fetch(`${base}/leaderboards/${type}/show`, {
 				headers: {
 					'x-hydra-access-token': this.accessToken,
 					'x-hydra-api-key': this.apiKey,
@@ -195,7 +194,7 @@ export class Client {
 			if (!character) {
 				return reject(new Error('A character must be provided.'));
 			}
-			const data = fetch(base + `/leaderboards/${character}_${type}/show`, {
+			const data = fetch(`${base}/leaderboards/${character}_${type}/show`, {
 				headers: {
 					'x-hydra-access-token': this.accessToken,
 					'x-hydra-api-key': this.apiKey,
@@ -212,7 +211,7 @@ export class Client {
 			if (!id) {
 				return reject(new Error('A user ID must be provided.'));
 			}
-			const data = fetch(base + `/matches/all/${id}?page=${page}`, {
+			const data = fetch(`${base}/matches/all/${id}?page=${page}`, {
 				headers: {
 					'x-hydra-access-token': this.accessToken,
 					'x-hydra-api-key': this.apiKey,

@@ -1,8 +1,15 @@
 {
 	"name": "multiversus.js",
 	"version": "1.0.6",
-	"description": "",
-	"main": "index.js",
+	"description": "A simple Node.js module to access the MultiVersus API.",
+	"scripts": {
+		"lint": "prettier --check . && eslint . && tslint typings/index.d.ts",
+		"format": "prettier --write . && eslint . --fix",
+		"changelog": "git cliff --prepend ./CHANGELOG.md -u -c ./cliff.toml",
+		"release": "cliff-jumper --skip-tag"
+	},
+	"main": "./src/index.js",
+	"types": "./typings/index.d.ts",
 	"type": "module",
 	"author": "Elijah Conners <business@elijahpepe.com>",
 	"license": "MIT",
@@ -21,11 +28,12 @@
 	"devDependencies": {
 		"@commitlint/cli": "^17.0.3",
 		"@commitlint/config-angular": "^17.0.3",
+		"@favware/cliff-jumper": "^1.8.6",
 		"eslint": "^8.20.0",
 		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-import": "^2.26.0",
 		"husky": "^8.0.1",
 		"lint-staged": "^13.0.3",
 		"prettier": "^2.7.1"
-	},
-	"types": "./typings/index.d.ts"
+	}
 }
