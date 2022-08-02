@@ -5,11 +5,11 @@ import { fetch } from 'undici';
 const base = 'https://dokken-api.wbagora.com';
 
 export class Client {
-	constructor(accessToken, clientId, userAgent) {
+	constructor(accessToken, clientId) {
 		this.accessToken = accessToken;
 		this.apiKey = '51586fdcbd214feb84b0e475b130fce0';
 		this.clientId = clientId;
-		this.userAgent = userAgent || 'Hydra-Cpp/1.132.0';
+		this.userAgent = 'Hydra-Cpp/1.132.0';
 	}
 
 	handleData(data, resolve, reject) {
@@ -153,8 +153,8 @@ export class Client {
 					'x-hydra-access-token': this.accessToken,
 					'x-hydra-api-key': this.apiKey,
 					'x-hydra-client-id': this.clientId,
-					'x-hydra-user-agent': this.userAgent
-				}
+					'x-hydra-user-agent': this.userAgent,
+				},
 			});
 			this.handleData(data, resolve, reject);
 		});
