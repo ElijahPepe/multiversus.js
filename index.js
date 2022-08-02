@@ -42,7 +42,18 @@ export class Client {
 					'Content-Type': 'application/json',
 				},
 				method: 'POST',
-				body: JSON.stringify({ auth: { fail_on_missing: true, steam: steamToken } }),
+				body: JSON.stringify({
+					auth: { fail_on_missing: true, steam: steamToken },
+					options: [
+						'configuration',
+						'achievements',
+						'account',
+						'profile',
+						'notifications',
+						'maintenance',
+						'wb_network',
+					],
+				}),
 			});
 			this.handleData(data, resolve, reject);
 		});
