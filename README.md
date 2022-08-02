@@ -21,13 +21,21 @@ yarn add multiversus.js
 
 ## Example usage
 
-To create a client, an access token, API key, and client ID are necessary. To retrieve these values, a tool such as [Fiddler](https://www.telerik.com/fiddler) is required. The required values can then be retrieved by analyzing the network requests made from MultiVersus.
+To create a client, an access token and client ID are necessary. To retrieve these values, a tool such as [Fiddler](https://www.telerik.com/fiddler) is required. The required values can then be retrieved by analyzing the network requests made from MultiVersus.
 
 Initialize the client:
 
 ```js
 const { Client } = require('multiversus.js');
 const client = new Client('accessToken', 'clientId');
+```
+
+To retrieve an access token, alternatively, initialize the client as follows, using your Steam username and password in place of 'username' and 'password':
+
+```js
+const { Client } = require('multiversus.js');
+const client = new Client('accessToken', 'clientId');
+client.login('username', 'password');
 ```
 
 Get the MultiVersus 2v2 leaderboard:
