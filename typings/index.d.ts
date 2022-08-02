@@ -70,6 +70,23 @@ export class Client {
 	 * @param {number} [page=1] The match page to fetch.
 	 */
 	getMatches(id: string, page?: number): Promise<any>;
+	/**
+	 * Fetch users Battlepass.
+	 * @param {string} id The ID of the user.
+	 */
+	 getBattlepass(id: string): Promise<any>;
+	 /**
+	 * Fetch users quests.
+	 * @param {string} id The ID of the user.
+	 */
+	 getQuests(id: string): Promise<any>;
+	 /**
+	 * Fetch users clan(s).
+	 * @param {string} id The ID of the user.
+	 * @param {number} [page=1] The match page to fetch.
+	 * @param {number} [count=25] The count to fetch.
+	 */
+	  getClan(id: string, page?: number, count?: number): Promise<any>;
 }
 export class CharacterData {
 	static Shaggy: {
