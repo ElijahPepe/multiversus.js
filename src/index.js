@@ -1,10 +1,8 @@
 'use strict';
 
-import pkg from 'steam-user';
+import SteamUser from 'steam-user';
 import { fetch } from 'undici';
 import { base, apiKey, userAgent } from './utils/constants.js';
-
-const { SteamUser } = pkg;
 
 export class Client {
 	constructor(accessToken, clientId) {
@@ -15,33 +13,44 @@ export class Client {
 	}
 
 	login(username, password) {
-		const steamUser = new SteamUser();
-		try {
-			steamUser.logOn({ accountName: username, password: password });
-		} catch (err) {
-			throw new Error('Invalid Steam username or password provided!');
-		}
-		steamUser.createEncryptedAppTicket(1818750, async (err, ticket) => {
-			if (err) {
-				throw new Error(err);
+		return new Promise((resolve, reject) => {
+			const steamUser = new SteamUser();
+			try {
+				steamUser.logOn({ accountName: username, password });
+			} catch (err) {
+				throw new Error('Invalid Steam username or password provided!');
 			}
-			const data = await this.info(ticket.toString('hex'));
-			this.accessToken = data.token;
+			steamUser.on('loggedOn', async (details) => {
+				const ticket = await steamUser.getEncryptedAppTicket(1818750, null);
+				const data = await this.info(ticket.encryptedAppTicket.toString('hex'));
+				this.accessToken = data.token;
+			});
+			resolve(this);
+		});
+	}
+
+	fetchData({ url, method = 'GET', body = null, headers } = {}) {
+		return fetch(url, {
+			headers: headers ?? {
+				'x-hydra-api-key': this.apiKey,
+				'x-hydra-client-id': this.clientId,
+				'x-hydra-user-agent': this.userAgent,
+				'Content-Type': 'application/json',
+			},
+			method,
+			body,
+		}).then(async (res) => {
+			return await res.json();
 		});
 	}
 
 	info(steamTicket) {
-		return new Promise((resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			if (!steamTicket) {
 				throw new Error('A Steam ticket must be provided.');
 			}
-			const data = fetch(`${base}/access`, {
-				headers: {
-					'x-hydra-api-key': this.apiKey,
-					'x-hydra-client-id': this.clientId,
-					'x-hydra-user-agent': this.userAgent,
-					'Content-Type': 'application/json',
-				},
+			const data = await this.fetchData({
+				url: `${base}/access`,
 				method: 'POST',
 				body: JSON.stringify({
 					auth: { fail_on_missing: true, steam: steamTicket },
@@ -61,89 +70,77 @@ export class Client {
 	}
 
 	handleData(data, resolve, reject) {
-		data
-			.then((res) => res.text())
-			.then((json) => {
-				if (JSON.parse(json).msg) {
-					return reject(new Error(JSON.parse(json).msg));
-				}
-				return resolve(JSON.parse(json));
-			});
+		if (data.msg) {
+			return reject(new Error(data.msg));
+		}
+		return resolve(data);
 	}
 
 	searchByUsername(username, limit = 25) {
-		return new Promise((resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			if (!username) {
 				throw new Error('A query must be provided.');
 			}
-			const data = fetch(`${base}/profiles/search_queries/get-by-username/run?username=${username}&limit=${limit}`, {
-				headers: {
-					'x-hydra-access-token': this.accessToken,
-					'x-hydra-api-key': this.apiKey,
-					'x-hydra-client-id': this.clientId,
-					'x-hydra-user-agent': this.userAgent,
-				},
+			const data = await this.fetchData({
+				url: `${base}/profiles/search_queries/get-by-username/run?username=${username}&limit=${limit}`,
 			});
 			this.handleData(data, resolve, reject);
 		});
 	}
 
 	getMatch(id) {
-		return new Promise((resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			if (!id) {
 				throw new Error('A match ID must be provided.');
 			}
-			const data = fetch(`${base}/matches/${id}`, {
-				headers: {
-					'x-hydra-access-token': this.accessToken,
-					'x-hydra-api-key': this.apiKey,
-					'x-hydra-client-id': this.clientId,
-					'x-hydra-user-agent': this.userAgent,
-				},
+			const data = await this.fetchData({
+				url: `${base}/matches/${id}`,
 			});
 			this.handleData(data, resolve, reject);
 		});
 	}
 
 	getProfile(id) {
-		return new Promise((resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			if (!id) {
 				throw new Error('A user ID must be provided.');
 			}
-			const data = fetch(`${base}/profiles/${id}`, {
-				headers: {
-					'x-hydra-access-token': this.accessToken,
-					'x-hydra-api-key': this.apiKey,
-					'x-hydra-client-id': this.clientId,
-					'x-hydra-user-agent': this.userAgent,
-				},
+			const data = await this.fetchData({
+				url: `${base}/profiles/${id}`,
+			});
+			this.handleData(data, resolve, reject);
+		});
+	}
+
+	getAccount(id) {
+		return new Promise(async (resolve, reject) => {
+			if (!id) {
+				throw new Error('A user ID must be provided.');
+			}
+			const data = await this.fetchData({
+				url: `${base}/accounts/${id}`,
 			});
 			this.handleData(data, resolve, reject);
 		});
 	}
 
 	getProfileLeaderboard(id, type) {
-		return new Promise((resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			if (type !== '2v2' && type !== '1v1') {
 				return reject(new Error('Leaderboard type must be 1v1 or 2v2.'));
 			}
 			if (!id) {
 				return reject(new Error('A user ID must be provided.'));
 			}
-			const data = fetch(`${base}/leaderboards/${type}/score-and-rank/${id}`, {
-				headers: {
-					'x-hydra-access-token': this.accessToken,
-					'x-hydra-api-key': this.apiKey,
-					'x-hydra-client-id': this.clientId,
-					'x-hydra-user-agent': this.userAgent,
-				},
+			const data = await this.fetchData({
+				url: `${base}/leaderboards/${type}/score-and-rank/${id}`,
 			});
 			this.handleData(data, resolve, reject);
 		});
 	}
 
 	getProfileLeaderboardForCharacter(id, type, character) {
-		return new Promise((resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			if (type !== '2v2' && type !== '1v1') {
 				return reject(new Error('Leaderboard type must be 1v1 or 2v2.'));
 			}
@@ -153,37 +150,27 @@ export class Client {
 			if (!character) {
 				return reject(new Error('A character must be provided.'));
 			}
-			const data = fetch(`${base}/leaderboards/${character}_${type}/score-and-rank/${id}`, {
-				headers: {
-					'x-hydra-access-token': this.accessToken,
-					'x-hydra-api-key': this.apiKey,
-					'x-hydra-client-id': this.clientId,
-					'x-hydra-user-agent': this.userAgent,
-				},
+			const data = await this.fetchData({
+				url: `${base}/leaderboards/${character}_${type}/score-and-rank/${id}`,
 			});
 			this.handleData(data, resolve, reject);
 		});
 	}
 
 	getLeaderboard(type) {
-		return new Promise((resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			if (type !== '2v2' && type !== '1v1') {
 				return reject(new Error('Leaderboard type must be 1v1 or 2v2.'));
 			}
-			const data = fetch(`${base}/leaderboards/${type}/show`, {
-				headers: {
-					'x-hydra-access-token': this.accessToken,
-					'x-hydra-api-key': this.apiKey,
-					'x-hydra-client-id': this.clientId,
-					'x-hydra-user-agent': this.userAgent,
-				},
+			const data = await this.fetchData({
+				url: `${base}/leaderboards/${type}/show`,
 			});
 			this.handleData(data, resolve, reject);
 		});
 	}
 
 	getLeaderboardForCharacter(type, character) {
-		return new Promise((resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			if (!this.ready) {
 				return reject(new Error('Client is not ready.'));
 			}
@@ -194,30 +181,20 @@ export class Client {
 			if (!character) {
 				return reject(new Error('A character must be provided.'));
 			}
-			const data = fetch(`${base}/leaderboards/${character}_${type}/show`, {
-				headers: {
-					'x-hydra-access-token': this.accessToken,
-					'x-hydra-api-key': this.apiKey,
-					'x-hydra-client-id': this.clientId,
-					'x-hydra-user-agent': this.userAgent,
-				},
+			const data = await this.fetchData({
+				url: `${base}/leaderboards/${character}_${type}/show`,
 			});
 			this.handleData(data, resolve, reject);
 		});
 	}
 
 	getMatches(id, page = 1) {
-		return new Promise((resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			if (!id) {
 				return reject(new Error('A user ID must be provided.'));
 			}
-			const data = fetch(`${base}/matches/all/${id}?page=${page}`, {
-				headers: {
-					'x-hydra-access-token': this.accessToken,
-					'x-hydra-api-key': this.apiKey,
-					'x-hydra-client-id': this.clientId,
-					'x-hydra-user-agent': this.userAgent,
-				},
+			const data = await this.fetchData({
+				url: `${base}/matches/all/${id}?page=${page}`,
 			});
 			this.handleData(data, resolve, reject);
 		});
