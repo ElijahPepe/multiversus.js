@@ -353,4 +353,10 @@ export class CharacterData {
 		displayName: 'LeBron James',
 		aliases: [],
 	};
+
+	static RickSanchez = {
+		id: 'character_c020',
+		displayName: 'Rick Sanchez',
+		aliases: ['Rick'],
+	};
 }
