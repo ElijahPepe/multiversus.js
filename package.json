@@ -1,6 +1,6 @@
 {
 	"name": "multiversus.js",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "A simple Node.js module to access the MultiVersus API.",
 	"scripts": {
 		"lint": "prettier --check . && eslint . && tslint typings/index.d.ts",

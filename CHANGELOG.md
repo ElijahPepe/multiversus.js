@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.1.1] - 2022-08-03
+
+## Bug Fixes
+
+- Revert changes to login() ([48f99f6](https://github.com/ElijahPepe/multiversus.js/commit/48f99f6b3a21e5950a7ea5b9b2063dc1aa0b6175))
+- Handle Steam Guard users in login() ([1452f5c](https://github.com/ElijahPepe/multiversus.js/commit/1452f5cabde1ebeae8d8aac1c9e5318d6b46b4d5))
+
+## Miscellaneous Tasks
+
+- Clarify login() in README ([ce8fe98](https://github.com/ElijahPepe/multiversus.js/commit/ce8fe986b9567a51c1c4948e7c9948cea7eb00a5))
+
+## Refactor
+
+- Remove clientId from Client ([d84ec6d](https://github.com/ElijahPepe/multiversus.js/commit/d84ec6d38425773e5d212a8600330f19887f2c1d))
+
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
 # [1.1.0] - 2022-08-03
 
 ## Bug Fixes
