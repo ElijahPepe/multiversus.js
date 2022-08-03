@@ -3,12 +3,12 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="x-ua-compatible" content="IE=edge" />
-		<title>multiversus.js</title>
+		<title>SearchResult | multiversus.js</title>
 		<meta name="description" content="Documentation for multiversus.js" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="assets/style.css" />
-		<link rel="stylesheet" href="assets/highlight.css" />
-		<script async src="assets/search.js" id="search-script"></script>
+		<link rel="stylesheet" href="../assets/style.css" />
+		<link rel="stylesheet" href="../assets/highlight.css" />
+		<script async src="../assets/search.js" id="search-script"></script>
 	</head>
 	<body>
 		<script>
@@ -16,7 +16,7 @@
 		</script>
 		<header class="tsd-page-toolbar">
 			<div class="tsd-toolbar-contents container">
-				<div class="table-cell" id="tsd-search" data-base=".">
+				<div class="table-cell" id="tsd-search" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption"
 							><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -30,7 +30,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">multiversus.js</a>
+					<a href="../index.html" class="title">multiversus.js</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu" aria-label="Menu"
@@ -45,69 +45,52 @@
 		<div class="container container-main">
 			<div class="col-8 col-content">
 				<div class="tsd-page-title">
-					<h2>multiversus.js</h2>
+					<ul class="tsd-breadcrumb">
+						<li><a href="../modules.html">multiversus.js</a></li>
+						<li><a href="SearchResult.html">SearchResult</a></li>
+					</ul>
+					<h1>Type alias SearchResult</h1>
 				</div>
-				<div class="tsd-panel tsd-typography">
-					<div align="center">
-						<h1>multiversus.js</h1>
-						<p>
-							<a href="https://discord.gg/Sxqn7hqKZY"
-								><img
-									src="https://img.shields.io/discord/1003096141258309732?color=5865F2&logo=discord&logoColor=white"
-									alt="Discord server"
-							/></a>
-							<a href="https://www.npmjs.com/package/multiversus.js"
-								><img src="https://img.shields.io/npm/v/multiversus.js.svg?maxAge=3600" alt="npm version"
-							/></a>
-						</p>
-					</div>
-
-					<a href="#about" id="about" style="color: inherit; text-decoration: none">
-						<h2>About</h2>
-					</a>
-					<p>A simple Node.js module to access the MultiVersus API.</p>
-
-					<a href="#installation" id="installation" style="color: inherit; text-decoration: none">
-						<h2>Installation</h2>
-					</a>
-					<pre><code class="language-sh"><span class="hl-0">npm install multiversus.js</span><br/><span class="hl-0">yarn add multiversus.js</span>
-</code></pre>
-
-					<a href="#example-usage" id="example-usage" style="color: inherit; text-decoration: none">
-						<h2>Example usage</h2>
-					</a>
-					<p>
-						Initialize the client using your Steam username and password (if your account doesn&#39;t have Steam Guard):
-					</p>
-					<pre><code class="language-js"><span class="hl-1">const</span><span class="hl-0"> { </span><span class="hl-2">Client</span><span class="hl-0"> } = </span><span class="hl-3">require</span><span class="hl-0">(</span><span class="hl-4">&#39;multiversus.js&#39;</span><span class="hl-0">);</span><br/><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">client</span><span class="hl-0"> = </span><span class="hl-1">new</span><span class="hl-0"> </span><span class="hl-3">Client</span><span class="hl-0">();</span><br/><br/><span class="hl-5">client</span><span class="hl-0">.</span><span class="hl-3">login</span><span class="hl-0">(</span><span class="hl-4">&#39;username&#39;</span><span class="hl-0">, </span><span class="hl-4">&#39;password&#39;</span><span class="hl-0">); </span><span class="hl-6">// You can initialize the client by supplying your Steam username and password</span>
-</code></pre>
-					<p>
-						Alternatively, initialize the client as follows, using a pre-existing access token. Access tokens can be
-						obtained by analyzing the network requests made by MultiVersus using a tool such as
-						<a href="https://www.telerik.com/fiddler">Fiddler</a> (if using Fiddler, make sure HTTPS traffic is
-						decrypted):
-					</p>
-					<pre><code class="language-js"><span class="hl-1">const</span><span class="hl-0"> { </span><span class="hl-2">Client</span><span class="hl-0"> } = </span><span class="hl-3">require</span><span class="hl-0">(</span><span class="hl-4">&#39;multiversus.js&#39;</span><span class="hl-0">);</span><br/><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">client</span><span class="hl-0"> = </span><span class="hl-1">new</span><span class="hl-0"> </span><span class="hl-3">Client</span><span class="hl-0">(</span><span class="hl-4">&#39;accessToken&#39;</span><span class="hl-0">);</span>
-</code></pre>
-					<p>Get the MultiVersus 2v2 leaderboard:</p>
-					<pre><code class="language-js"><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">leaderboardData</span><span class="hl-0"> = </span><span class="hl-7">await</span><span class="hl-0"> </span><span class="hl-5">client</span><span class="hl-0">.</span><span class="hl-3">getLeaderboard</span><span class="hl-0">(</span><span class="hl-4">&#39;2v2&#39;</span><span class="hl-0">); </span><span class="hl-6">// The type of the leaderboard to be retrieved can also be set to &#39;1v1&#39;.</span><br/><span class="hl-5">console</span><span class="hl-0">.</span><span class="hl-3">log</span><span class="hl-0">(</span><span class="hl-5">leaderboardData</span><span class="hl-0">);</span>
-</code></pre>
-					<p>Get a profile by a user&#39;s ID:</p>
-					<pre><code class="language-js"><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">userData</span><span class="hl-0"> = </span><span class="hl-7">await</span><span class="hl-0"> </span><span class="hl-5">client</span><span class="hl-0">.</span><span class="hl-3">getProfile</span><span class="hl-0">(</span><span class="hl-4">&#39;62e471bc5f77e966a384a570&#39;</span><span class="hl-0">);</span><br/><span class="hl-5">console</span><span class="hl-0">.</span><span class="hl-3">log</span><span class="hl-0">(</span><span class="hl-5">userData</span><span class="hl-0">);</span>
-</code></pre>
-					<p>Search for users:</p>
-					<pre><code class="language-js"><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-2">searchData</span><span class="hl-0"> = </span><span class="hl-7">await</span><span class="hl-0"> </span><span class="hl-5">client</span><span class="hl-0">.</span><span class="hl-3">searchByUsername</span><span class="hl-0">(</span><span class="hl-4">&#39;ElijahPepe&#39;</span><span class="hl-0">); </span><span class="hl-6">// A second parameter can also be defined to limit the results returned.</span><br/><span class="hl-5">console</span><span class="hl-0">.</span><span class="hl-3">log</span><span class="hl-0">(</span><span class="hl-5">searchData</span><span class="hl-0">);</span>
-</code></pre>
-
-					<a href="#links" id="links" style="color: inherit; text-decoration: none">
-						<h2>Links</h2>
-					</a>
-					<ul>
-						<li><a href="https://www.npmjs.com/package/multiversus.js">npm</a></li>
-						<li><a href="https://github.com/ElijahPepe/multiversus.js">GitHub</a></li>
-						<li><a href="https://discord.gg/Sxqn7hqKZY">Discord server</a></li>
+				<div class="tsd-signature">
+					Search<wbr />Result<span class="tsd-signature-symbol">:</span>
+					<span class="tsd-signature-symbol">{ </span>result<span class="tsd-signature-symbol">: </span
+					><a href="ProfileResponse.html" class="tsd-signature-type" data-tsd-kind="Type alias">ProfileResponse</a
+					><span class="tsd-signature-symbol">; </span>score<span class="tsd-signature-symbol">: </span
+					><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span
+					><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span>
+				</div>
+				<div class="tsd-type-declaration">
+					<h4>Type declaration</h4>
+					<ul class="tsd-parameters">
+						<li class="tsd-parameter">
+							<h5>
+								<code class="tsd-tag ts-flagReadonly">Readonly</code> result<span class="tsd-signature-symbol">: </span
+								><a href="ProfileResponse.html" class="tsd-signature-type" data-tsd-kind="Type alias"
+									>ProfileResponse</a
+								>
+							</h5>
+							<div class="tsd-comment tsd-typography"><p>The result</p></div>
+						</li>
+						<li class="tsd-parameter">
+							<h5>
+								<code class="tsd-tag ts-flagReadonly">Readonly</code> score<span class="tsd-signature-symbol">: </span
+								><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span
+								><span class="tsd-signature-type">number</span>
+							</h5>
+							<div class="tsd-comment tsd-typography"><p>The score of the result</p></div>
+						</li>
 					</ul>
 				</div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>
+							Defined in
+							<a href="https://github.com/ElijahPepe/multiversus.js/blob/5cd191e/typings/index.d.ts#L255"
+								>index.d.ts:255</a
+							>
+						</li>
+					</ul>
+				</aside>
 			</div>
 			<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 				<div class="tsd-navigation settings">
@@ -269,8 +252,8 @@
 						</summary>
 						<div class="tsd-accordion-details">
 							<ul>
-								<li class="current selected">
-									<a href="modules.html">multiversus.js</a>
+								<li>
+									<a href="../modules.html">multiversus.js</a>
 									<ul></ul>
 								</li>
 							</ul>
@@ -280,7 +263,7 @@
 				<nav class="tsd-navigation secondary menu-sticky">
 					<ul>
 						<li class="tsd-kind-class">
-							<a href="classes/CharacterData.html" class="tsd-index-link"
+							<a href="../classes/CharacterData.html" class="tsd-index-link"
 								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
 									<rect
 										fill="var(--color-icon-background)"
@@ -302,7 +285,7 @@
 							>
 						</li>
 						<li class="tsd-kind-class">
-							<a href="classes/Client.html" class="tsd-index-link"
+							<a href="../classes/Client.html" class="tsd-index-link"
 								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
 									<use href="#icon-128-path"></use>
 									<use href="#icon-128-text"></use></svg
@@ -310,7 +293,7 @@
 							>
 						</li>
 						<li class="tsd-kind-type-alias">
-							<a href="types/LeaderboardType.html" class="tsd-index-link"
+							<a href="LeaderboardType.html" class="tsd-index-link"
 								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
 									<rect
 										fill="var(--color-icon-background)"
@@ -332,7 +315,7 @@
 							>
 						</li>
 						<li class="tsd-kind-type-alias">
-							<a href="types/ProfileResponse.html" class="tsd-index-link"
+							<a href="ProfileResponse.html" class="tsd-index-link"
 								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
 									<use href="#icon-4194304-path"></use>
 									<use href="#icon-4194304-text"></use></svg
@@ -340,15 +323,15 @@
 							>
 						</li>
 						<li class="tsd-kind-type-alias">
-							<a href="types/SearchResponse.html" class="tsd-index-link"
+							<a href="SearchResponse.html" class="tsd-index-link"
 								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
 									<use href="#icon-4194304-path"></use>
 									<use href="#icon-4194304-text"></use></svg
 								>Search<wbr />Response</a
 							>
 						</li>
-						<li class="tsd-kind-type-alias">
-							<a href="types/SearchResult.html" class="tsd-index-link"
+						<li class="current tsd-kind-type-alias">
+							<a href="SearchResult.html" class="tsd-index-link"
 								><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
 									<use href="#icon-4194304-path"></use>
 									<use href="#icon-4194304-text"></use></svg
@@ -363,6 +346,6 @@
 			<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 		</div>
 		<div class="overlay"></div>
-		<script src="assets/main.js"></script>
+		<script src="../assets/main.js"></script>
 	</body>
 </html>

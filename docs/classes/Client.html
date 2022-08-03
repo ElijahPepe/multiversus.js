@@ -52,7 +52,7 @@
 					<h1>Class Client</h1>
 				</div>
 				<section class="tsd-panel tsd-comment">
-					<div class="tsd-comment tsd-typography"><p>Class representing the base client of MultiVersus.</p></div>
+					<div class="tsd-comment tsd-typography"><p>The base client for interacting with the MultiVersus API.</p></div>
 				</section>
 				<section class="tsd-panel tsd-hierarchy">
 					<h4>Hierarchy</h4>
@@ -64,7 +64,7 @@
 					<ul>
 						<li>
 							Defined in
-							<a href="https://github.com/ElijahPepe/multiversus.js/blob/3400bf7/typings/index.d.ts#L4">index.d.ts:4</a>
+							<a href="https://github.com/ElijahPepe/multiversus.js/blob/5cd191e/typings/index.d.ts#L4">index.d.ts:4</a>
 						</li>
 					</ul>
 				</aside>
@@ -183,6 +183,18 @@
 												<use href="#icon-2048-text"></use></svg
 											><span>get<wbr />Quests</span></a
 										>
+										<a href="Client.html#info" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"
+											><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
+												<use href="#icon-2048-path"></use>
+												<use href="#icon-2048-text"></use></svg
+											><span>info</span></a
+										>
+										<a href="Client.html#login" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"
+											><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
+												<use href="#icon-2048-path"></use>
+												<use href="#icon-2048-text"></use></svg
+											><span>login</span></a
+										>
 										<a href="Client.html#searchByUsername" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"
 											><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
 												<use href="#icon-2048-path"></use>
@@ -220,7 +232,7 @@
 							<li class="tsd-signature tsd-anchor-link" id="constructor.new_Client">
 								new <wbr />Client<span class="tsd-signature-symbol">(</span>accessToken<span
 									class="tsd-signature-symbol"
-									>: </span
+									>?: </span
 								><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span
 								><span class="tsd-signature-symbol">: </span
 								><a href="Client.html" class="tsd-signature-type" data-tsd-kind="Class">Client</a
@@ -240,12 +252,16 @@
 								></a>
 							</li>
 							<li class="tsd-description">
-								<div class="tsd-comment tsd-typography"><p>Creates a client.</p></div>
+								<div class="tsd-comment tsd-typography"><p>Options for the client</p></div>
 								<div class="tsd-parameters">
 									<h4 class="tsd-parameters-title">Parameters</h4>
 									<ul class="tsd-parameter-list">
 										<li>
-											<h5>accessToken: <span class="tsd-signature-type">string</span></h5>
+											<h5>
+												<code class="tsd-tag ts-flagOptional">Optional</code> accessToken:
+												<span class="tsd-signature-type">string</span>
+											</h5>
+											<div class="tsd-comment tsd-typography"><p>Access token of the account to log in with</p></div>
 										</li>
 									</ul>
 								</div>
@@ -256,7 +272,7 @@
 									<ul>
 										<li>
 											Defined in
-											<a href="https://github.com/ElijahPepe/multiversus.js/blob/3400bf7/typings/index.d.ts#L9"
+											<a href="https://github.com/ElijahPepe/multiversus.js/blob/5cd191e/typings/index.d.ts#L9"
 												>index.d.ts:9</a
 											>
 										</li>
@@ -329,8 +345,8 @@
 									<ul>
 										<li>
 											Defined in
-											<a href="https://github.com/ElijahPepe/multiversus.js/blob/3400bf7/typings/index.d.ts#L55"
-												>index.d.ts:55</a
+											<a href="https://github.com/ElijahPepe/multiversus.js/blob/5cd191e/typings/index.d.ts#L84"
+												>index.d.ts:84</a
 											>
 										</li>
 									</ul>
@@ -414,8 +430,8 @@
 									<ul>
 										<li>
 											Defined in
-											<a href="https://github.com/ElijahPepe/multiversus.js/blob/3400bf7/typings/index.d.ts#L67"
-												>index.d.ts:67</a
+											<a href="https://github.com/ElijahPepe/multiversus.js/blob/5cd191e/typings/index.d.ts#L98"
+												>index.d.ts:98</a
 											>
 										</li>
 									</ul>
@@ -446,8 +462,8 @@
 							<li class="tsd-signature tsd-anchor-link" id="getLeaderboard.getLeaderboard-1">
 								get<wbr />Leaderboard<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol"
 									>: </span
-								><a href="../types/leaderboardType.html" class="tsd-signature-type" data-tsd-kind="Type alias"
-									>leaderboardType</a
+								><a href="../types/LeaderboardType.html" class="tsd-signature-type" data-tsd-kind="Type alias"
+									>LeaderboardType</a
 								><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span
 								><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span
 								><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span
@@ -474,8 +490,8 @@
 										<li>
 											<h5>
 												type:
-												<a href="../types/leaderboardType.html" class="tsd-signature-type" data-tsd-kind="Type alias"
-													>leaderboardType</a
+												<a href="../types/LeaderboardType.html" class="tsd-signature-type" data-tsd-kind="Type alias"
+													>LeaderboardType</a
 												>
 											</h5>
 											<div class="tsd-comment tsd-typography"><p>The type of leaderboard to fetch.</p></div>
@@ -490,8 +506,8 @@
 									<ul>
 										<li>
 											Defined in
-											<a href="https://github.com/ElijahPepe/multiversus.js/blob/3400bf7/typings/index.d.ts#L44"
-												>index.d.ts:44</a
+											<a href="https://github.com/ElijahPepe/multiversus.js/blob/5cd191e/typings/index.d.ts#L71"
+												>index.d.ts:71</a
 											>
 										</li>
 									</ul>
@@ -559,8 +575,8 @@
 									<ul>
 										<li>
 											Defined in
-											<a href="https://github.com/ElijahPepe/multiversus.js/blob/3400bf7/typings/index.d.ts#L21"
-												>index.d.ts:21</a
+											<a href="https://github.com/ElijahPepe/multiversus.js/blob/5cd191e/typings/index.d.ts#L44"
+												>index.d.ts:44</a
 											>
 										</li>
 									</ul>
@@ -637,8 +653,8 @@
 									<ul>
 										<li>
 											Defined in
-											<a href="https://github.com/ElijahPepe/multiversus.js/blob/3400bf7/typings/index.d.ts#L50"
-												>index.d.ts:50</a
+											<a href="https://github.com/ElijahPepe/multiversus.js/blob/5cd191e/typings/index.d.ts#L78"
+												>index.d.ts:78</a
 											>
 										</li>
 									</ul>
@@ -672,8 +688,8 @@
 								><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span
 								><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span
 								><span class="tsd-signature-symbol">&lt;</span
-								><a href="../types/profileResponse.html" class="tsd-signature-type" data-tsd-kind="Type alias"
-									>profileResponse</a
+								><a href="../types/ProfileResponse.html" class="tsd-signature-type" data-tsd-kind="Type alias"
+									>ProfileResponse</a
 								><span class="tsd-signature-symbol">&gt;</span
 								><a href="#getProfile.getProfile-1" aria-label="Permalink" class="tsd-anchor-icon"
 									><svg
@@ -697,22 +713,22 @@
 									<ul class="tsd-parameter-list">
 										<li>
 											<h5>id: <span class="tsd-signature-type">string</span></h5>
-											<div class="tsd-comment tsd-typography"><p>The ID of the profile to query.</p></div>
+											<div class="tsd-comment tsd-typography"><p>The ID of the profile to fetch</p></div>
 										</li>
 									</ul>
 								</div>
 								<h4 class="tsd-returns-title">
 									Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span
-									><a href="../types/profileResponse.html" class="tsd-signature-type" data-tsd-kind="Type alias"
-										>profileResponse</a
+									><a href="../types/ProfileResponse.html" class="tsd-signature-type" data-tsd-kind="Type alias"
+										>ProfileResponse</a
 									><span class="tsd-signature-symbol">&gt;</span>
 								</h4>
 								<aside class="tsd-sources">
 									<ul>
 										<li>
 											Defined in
-											<a href="https://github.com/ElijahPepe/multiversus.js/blob/3400bf7/typings/index.d.ts#L26"
-												>index.d.ts:26</a
+											<a href="https://github.com/ElijahPepe/multiversus.js/blob/5cd191e/typings/index.d.ts#L50"
+												>index.d.ts:50</a
 											>
 										</li>
 									</ul>
@@ -745,8 +761,8 @@
 									class="tsd-signature-symbol"
 									>: </span
 								><span class="tsd-signature-type">string</span>, type<span class="tsd-signature-symbol">: </span
-								><a href="../types/leaderboardType.html" class="tsd-signature-type" data-tsd-kind="Type alias"
-									>leaderboardType</a
+								><a href="../types/LeaderboardType.html" class="tsd-signature-type" data-tsd-kind="Type alias"
+									>LeaderboardType</a
 								><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span
 								><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span
 								><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span
@@ -777,8 +793,8 @@
 										<li>
 											<h5>
 												type:
-												<a href="../types/leaderboardType.html" class="tsd-signature-type" data-tsd-kind="Type alias"
-													>leaderboardType</a
+												<a href="../types/LeaderboardType.html" class="tsd-signature-type" data-tsd-kind="Type alias"
+													>LeaderboardType</a
 												>
 											</h5>
 											<div class="tsd-comment tsd-typography"><p>The leaderboard type to fetch.</p></div>
@@ -793,8 +809,8 @@
 									<ul>
 										<li>
 											Defined in
-											<a href="https://github.com/ElijahPepe/multiversus.js/blob/3400bf7/typings/index.d.ts#L32"
-												>index.d.ts:32</a
+											<a href="https://github.com/ElijahPepe/multiversus.js/blob/5cd191e/typings/index.d.ts#L57"
+												>index.d.ts:57</a
 											>
 										</li>
 									</ul>
@@ -830,8 +846,8 @@
 								>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, type<span
 									class="tsd-signature-symbol"
 									>: </span
-								><a href="../types/leaderboardType.html" class="tsd-signature-type" data-tsd-kind="Type alias"
-									>leaderboardType</a
+								><a href="../types/LeaderboardType.html" class="tsd-signature-type" data-tsd-kind="Type alias"
+									>LeaderboardType</a
 								>, character<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span
 								><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span
 								><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span
@@ -866,8 +882,8 @@
 										<li>
 											<h5>
 												type:
-												<a href="../types/leaderboardType.html" class="tsd-signature-type" data-tsd-kind="Type alias"
-													>leaderboardType</a
+												<a href="../types/LeaderboardType.html" class="tsd-signature-type" data-tsd-kind="Type alias"
+													>LeaderboardType</a
 												>
 											</h5>
 											<div class="tsd-comment tsd-typography"><p>The leaderboard type to fetch.</p></div>
@@ -886,8 +902,8 @@
 									<ul>
 										<li>
 											Defined in
-											<a href="https://github.com/ElijahPepe/multiversus.js/blob/3400bf7/typings/index.d.ts#L39"
-												>index.d.ts:39</a
+											<a href="https://github.com/ElijahPepe/multiversus.js/blob/5cd191e/typings/index.d.ts#L65"
+												>index.d.ts:65</a
 											>
 										</li>
 									</ul>
@@ -955,8 +971,172 @@
 									<ul>
 										<li>
 											Defined in
-											<a href="https://github.com/ElijahPepe/multiversus.js/blob/3400bf7/typings/index.d.ts#L60"
-												>index.d.ts:60</a
+											<a href="https://github.com/ElijahPepe/multiversus.js/blob/5cd191e/typings/index.d.ts#L90"
+												>index.d.ts:90</a
+											>
+										</li>
+									</ul>
+								</aside>
+							</li>
+						</ul>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a id="info" class="tsd-anchor"></a>
+						<h3 class="tsd-anchor-link">
+							<span>info</span
+							><a href="#info" aria-label="Permalink" class="tsd-anchor-icon"
+								><svg
+									class="icon icon-tabler icon-tabler-link"
+									viewBox="0 0 24 24"
+									stroke-width="2"
+									stroke="currentColor"
+									fill="none"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								>
+									<use href="#icon-anchor-a"></use>
+									<use href="#icon-anchor-b"></use>
+									<use href="#icon-anchor-c"></use></svg
+							></a>
+						</h3>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-anchor-link" id="info.info-1">
+								info<span class="tsd-signature-symbol">(</span>steamTicket<span class="tsd-signature-symbol">?: </span
+								><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span
+								><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span
+								><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span
+								><span class="tsd-signature-symbol">&gt;</span
+								><a href="#info.info-1" aria-label="Permalink" class="tsd-anchor-icon"
+									><svg
+										class="icon icon-tabler icon-tabler-link"
+										viewBox="0 0 24 24"
+										stroke-width="2"
+										stroke="currentColor"
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<use href="#icon-anchor-a"></use>
+										<use href="#icon-anchor-b"></use>
+										<use href="#icon-anchor-c"></use></svg
+								></a>
+							</li>
+							<li class="tsd-description">
+								<div class="tsd-comment tsd-typography">
+									<p>
+										Returns info about the current client, including account info, notifications, and WB network status.
+									</p>
+
+									<h3>Returns</h3>
+									<h3>Example</h3>
+									<pre><code class="language-ts"><span class="hl-5">client</span><span class="hl-0">.</span><span class="hl-3">info</span><span class="hl-0">();</span>
+</code></pre>
+								</div>
+								<div class="tsd-parameters">
+									<h4 class="tsd-parameters-title">Parameters</h4>
+									<ul class="tsd-parameter-list">
+										<li>
+											<h5>
+												<code class="tsd-tag ts-flagOptional">Optional</code> steamTicket:
+												<span class="tsd-signature-type">string</span>
+											</h5>
+											<div class="tsd-comment tsd-typography">
+												<p>The Steam encrypted application ticket of the account, converted to hex.</p>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<h4 class="tsd-returns-title">
+									Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span
+									><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
+								</h4>
+								<aside class="tsd-sources">
+									<ul>
+										<li>
+											Defined in
+											<a href="https://github.com/ElijahPepe/multiversus.js/blob/5cd191e/typings/index.d.ts#L28"
+												>index.d.ts:28</a
+											>
+										</li>
+									</ul>
+								</aside>
+							</li>
+						</ul>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+						<a id="login" class="tsd-anchor"></a>
+						<h3 class="tsd-anchor-link">
+							<span>login</span
+							><a href="#login" aria-label="Permalink" class="tsd-anchor-icon"
+								><svg
+									class="icon icon-tabler icon-tabler-link"
+									viewBox="0 0 24 24"
+									stroke-width="2"
+									stroke="currentColor"
+									fill="none"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								>
+									<use href="#icon-anchor-a"></use>
+									<use href="#icon-anchor-b"></use>
+									<use href="#icon-anchor-c"></use></svg
+							></a>
+						</h3>
+						<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+							<li class="tsd-signature tsd-anchor-link" id="login.login-1">
+								login<span class="tsd-signature-symbol">(</span>username<span class="tsd-signature-symbol">: </span
+								><span class="tsd-signature-type">string</span>, password<span class="tsd-signature-symbol">: </span
+								><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span
+								><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span
+								><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span
+								><span class="tsd-signature-symbol">&gt;</span
+								><a href="#login.login-1" aria-label="Permalink" class="tsd-anchor-icon"
+									><svg
+										class="icon icon-tabler icon-tabler-link"
+										viewBox="0 0 24 24"
+										stroke-width="2"
+										stroke="currentColor"
+										fill="none"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<use href="#icon-anchor-a"></use>
+										<use href="#icon-anchor-b"></use>
+										<use href="#icon-anchor-c"></use></svg
+								></a>
+							</li>
+							<li class="tsd-description">
+								<div class="tsd-comment tsd-typography">
+									<p>Creates an access token, allowing you to access the MultiVersus API.</p>
+
+									<h3>Returns</h3>
+									<h3>Example</h3>
+									<pre><code class="language-ts"><span class="hl-5">client</span><span class="hl-0">.</span><span class="hl-3">login</span><span class="hl-0">(</span><span class="hl-4">&#39;username&#39;</span><span class="hl-0">, </span><span class="hl-4">&#39;password&#39;</span><span class="hl-0">);</span>
+</code></pre>
+								</div>
+								<div class="tsd-parameters">
+									<h4 class="tsd-parameters-title">Parameters</h4>
+									<ul class="tsd-parameter-list">
+										<li>
+											<h5>username: <span class="tsd-signature-type">string</span></h5>
+											<div class="tsd-comment tsd-typography"><p>Username of the account to log in with</p></div>
+										</li>
+										<li>
+											<h5>password: <span class="tsd-signature-type">string</span></h5>
+											<div class="tsd-comment tsd-typography"><p>Password of the account to log in with</p></div>
+										</li>
+									</ul>
+								</div>
+								<h4 class="tsd-returns-title">
+									Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span
+									><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>
+								</h4>
+								<aside class="tsd-sources">
+									<ul>
+										<li>
+											Defined in
+											<a href="https://github.com/ElijahPepe/multiversus.js/blob/5cd191e/typings/index.d.ts#L19"
+												>index.d.ts:19</a
 											>
 										</li>
 									</ul>
@@ -1009,20 +1189,27 @@
 								></a>
 							</li>
 							<li class="tsd-description">
-								<div class="tsd-comment tsd-typography"><p>Search for users from a username.</p></div>
+								<div class="tsd-comment tsd-typography">
+									<p>Search for users from a username.</p>
+
+									<h3>Returns</h3>
+									<h3>Example</h3>
+									<pre><code class="language-ts"><span class="hl-5">client</span><span class="hl-0">.</span><span class="hl-3">searchByUsername</span><span class="hl-0">(</span><span class="hl-4">&#39;ElijahPepe&#39;</span><span class="hl-0">, </span><span class="hl-8">10</span><span class="hl-0">);</span>
+</code></pre>
+								</div>
 								<div class="tsd-parameters">
 									<h4 class="tsd-parameters-title">Parameters</h4>
 									<ul class="tsd-parameter-list">
 										<li>
 											<h5>username: <span class="tsd-signature-type">string</span></h5>
-											<div class="tsd-comment tsd-typography"><p>The username to search for.</p></div>
+											<div class="tsd-comment tsd-typography"><p>Username to search for</p></div>
 										</li>
 										<li>
 											<h5>
 												<code class="tsd-tag ts-flagOptional">Optional</code> limit:
 												<span class="tsd-signature-type">number</span>
 											</h5>
-											<div class="tsd-comment tsd-typography"><p>Limit of usernames to return.</p></div>
+											<div class="tsd-comment tsd-typography"><p>Limit of users to return.</p></div>
 										</li>
 									</ul>
 								</div>
@@ -1034,8 +1221,8 @@
 									<ul>
 										<li>
 											Defined in
-											<a href="https://github.com/ElijahPepe/multiversus.js/blob/3400bf7/typings/index.d.ts#L16"
-												>index.d.ts:16</a
+											<a href="https://github.com/ElijahPepe/multiversus.js/blob/5cd191e/typings/index.d.ts#L38"
+												>index.d.ts:38</a
 											>
 										</li>
 									</ul>
@@ -1315,6 +1502,22 @@
 											<use href="#icon-2048-path"></use>
 											<use href="#icon-2048-text"></use></svg
 										>get<wbr />Quests</a
+									>
+								</li>
+								<li class="tsd-kind-method tsd-parent-kind-class">
+									<a href="Client.html#info" class="tsd-index-link"
+										><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
+											<use href="#icon-2048-path"></use>
+											<use href="#icon-2048-text"></use></svg
+										>info</a
+									>
+								</li>
+								<li class="tsd-kind-method tsd-parent-kind-class">
+									<a href="Client.html#login" class="tsd-index-link"
+										><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24">
+											<use href="#icon-2048-path"></use>
+											<use href="#icon-2048-text"></use></svg
+										>login</a
 									>
 								</li>
 								<li class="tsd-kind-method tsd-parent-kind-class">
