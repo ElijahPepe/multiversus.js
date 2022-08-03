@@ -23,6 +23,7 @@
 	"homepage": "https://multiversus.js.org",
 	"dependencies": {
 		"steam-user": "^4.24.6",
+		"typedoc": "^0.23.10",
 		"undici": "^5.8.0"
 	},
 	"devDependencies": {

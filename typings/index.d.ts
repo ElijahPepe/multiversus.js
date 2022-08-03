@@ -10,27 +10,6 @@ export class Client {
 	constructor(accessToken: string, clientId: string);
 
 	/**
-	 * Handles the API response if it is successful.
-	 * @name resolveCallback
-	 * @function
-	 * @param {*} value The JSON object returned from the API.
-	 */
-
-	/**
-	 * Handles the API response if it is unsuccessful.
-	 * @name rejectCallback
-	 * @function
-	 * @param {*} error The error message returned from the API.
-	 */
-
-	/**
-	 * Deconstruct an API response promise into two callback handlers.
-	 * @param {apiResponse} data Response data of the API.
-	 * @param {resolveCallback} resolve Callback for a successful API response.
-	 * @param {rejectCallback} reject Callback for an unsuccessful API response.
-	 */
-	private handleData(data: apiResponse, resolve: resolveCallback, reject: rejectCallback): void;
-	/**
 	 * Search for users from a username.
 	 * @param {string} username The username to search for.
 	 * @param {number} [limit=25] Limit of usernames to return.
@@ -74,19 +53,19 @@ export class Client {
 	 * Fetch users Battlepass.
 	 * @param {string} id The ID of the user.
 	 */
-	 getBattlepass(id: string): Promise<any>;
-	 /**
+	getBattlepass(id: string): Promise<any>;
+	/**
 	 * Fetch users quests.
 	 * @param {string} id The ID of the user.
 	 */
-	 getQuests(id: string): Promise<any>;
-	 /**
+	getQuests(id: string): Promise<any>;
+	/**
 	 * Fetch users clan(s).
 	 * @param {string} id The ID of the user.
 	 * @param {number} [page=1] The match page to fetch.
 	 * @param {number} [count=25] The count to fetch.
 	 */
-	  getClan(id: string, page?: number, count?: number): Promise<any>;
+	getClan(id: string, page?: number, count?: number): Promise<any>;
 }
 export class CharacterData {
 	static Shaggy: {
