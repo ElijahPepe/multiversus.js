@@ -153,6 +153,9 @@ export class CharacterData {
 	static LeBronJames: {
 		id: string;
 	};
+	static RickSanchez: {
+		id: string;
+	};
 }
 
 /**
