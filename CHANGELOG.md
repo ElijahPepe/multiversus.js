@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.1.2] - 2022-08-03
+
+## Documentation
+
+- Generate docs ([0d27036](https://github.com/ElijahPepe/multiversus.js/commit/0d2703671f27bef1655f430a8dcdda27eca7f225))
+
+## Refactor
+
+- Implement steamTicket, improve typings ([5cd191e](https://github.com/ElijahPepe/multiversus.js/commit/5cd191ea46dccfe7c64dc5bc88e056b75d240978))
+
 # [1.1.1] - 2022-08-03
 
 ## Bug Fixes
@@ -16,10 +26,6 @@ All notable changes to this project will be documented in this file.
 ## Refactor
 
 - Remove clientId from Client ([d84ec6d](https://github.com/ElijahPepe/multiversus.js/commit/d84ec6d38425773e5d212a8600330f19887f2c1d))
-
-# Changelog
-
-All notable changes to this project will be documented in this file.
 
 # [1.1.0] - 2022-08-03
 
