@@ -28,18 +28,22 @@ export class Client {
 		});
 	}
 
-	fetchData({ url, method = 'GET', body = null, headers } = {}) {
+	fetchData({ url, method = 'GET', body = null } = {}) {
 		return fetch(url, {
-			headers: headers ?? {
+			headers: {
 				'x-hydra-api-key': this.apiKey,
 				'x-hydra-client-id': this.clientId,
 				'x-hydra-user-agent': this.userAgent,
+				'x-hydra-access-token': this.accessToken,
 				'Content-Type': 'application/json',
 			},
 			method,
 			body,
+			// eslint-disable-next-line arrow-body-style
+		}).then(async (res) => {
 			// eslint-disable-next-line no-return-await
-		}).then(async (res) => await res.json());
+			return await res.json();
+		});
 	}
 
 	info(steamTicket) {
