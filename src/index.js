@@ -1,17 +1,30 @@
 /* eslint-disable no-async-promise-executor */
+import process from 'node:process';
 import SteamUser from 'steam-user';
 import { fetch } from 'undici';
 import { base, apiKey, userAgent } from './utils/constants.js';
 
 export class Client {
 	constructor(accessToken) {
-		this.accessToken = accessToken;
+		Object.defineProperty(this, 'accessToken', { writable: true });
+		if (accessToken) {
+			this.accessToken = accessToken;
+		} else if (!this.accessToken && 'MULTIVERSUS_ACCESS_TOKEN' in process.env) {
+			this.accessToken = process.env.MULTIVERSUS_ACCESS_TOKEN;
+		} else {
+			this.accessToken = null;
+		}
+
+		this.steamTicket = null;
 		this.apiKey = apiKey;
 		this.userAgent = userAgent;
 	}
 
 	login(username, password) {
 		return new Promise((resolve) => {
+			if (!username || !password || typeof username !== 'string' || typeof password !== 'string') {
+				throw new Error('Invalid username or password provided.');
+			}
 			const steamUser = new SteamUser();
 			try {
 				steamUser.logOn({ accountName: username, password });
@@ -20,6 +33,7 @@ export class Client {
 			}
 			steamUser.on('loggedOn', async () => {
 				const ticket = await steamUser.getEncryptedAppTicket(1818750, null);
+				this.steamTicket = ticket.encryptedAppTicket.toString('hex');
 				const data = await this.info(ticket.encryptedAppTicket.toString('hex'));
 				this.accessToken = data.token;
 			});
@@ -46,14 +60,14 @@ export class Client {
 
 	info(steamTicket) {
 		return new Promise(async (resolve, reject) => {
-			if (!steamTicket) {
+			if (!steamTicket || !this.steamTicket) {
 				throw new Error('A Steam ticket must be provided.');
 			}
 			const data = await this.fetchData({
 				url: `${base}/access`,
 				method: 'POST',
 				body: JSON.stringify({
-					auth: { fail_on_missing: true, steam: steamTicket },
+					auth: { fail_on_missing: true, steam: this.steamTicket ? this.steamTicket : steamTicket },
 					options: [
 						'configuration',
 						'achievements',
