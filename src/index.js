@@ -1,5 +1,4 @@
-'use strict';
-
+/* eslint-disable no-async-promise-executor */
 import SteamUser from 'steam-user';
 import { fetch } from 'undici';
 import { base, apiKey, userAgent } from './utils/constants.js';
@@ -13,14 +12,14 @@ export class Client {
 	}
 
 	login(username, password) {
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve) => {
 			const steamUser = new SteamUser();
 			try {
 				steamUser.logOn({ accountName: username, password });
 			} catch (err) {
 				throw new Error('Invalid Steam username or password provided!');
 			}
-			steamUser.on('loggedOn', async (details) => {
+			steamUser.on('loggedOn', async () => {
 				const ticket = await steamUser.getEncryptedAppTicket(1818750, null);
 				const data = await this.info(ticket.encryptedAppTicket.toString('hex'));
 				this.accessToken = data.token;
@@ -39,9 +38,8 @@ export class Client {
 			},
 			method,
 			body,
-		}).then(async (res) => {
-			return await res.json();
-		});
+			// eslint-disable-next-line no-return-await
+		}).then(async (res) => await res.json());
 	}
 
 	info(steamTicket) {
