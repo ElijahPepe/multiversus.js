@@ -5,9 +5,8 @@ export class Client {
 	/**
 	 * Creates a client.
 	 * @param {string} accessToken
-	 * @param {string} clientId
 	 */
-	constructor(accessToken: string, clientId: string);
+	constructor(accessToken: string);
 
 	/**
 	 * Search for users from a username.

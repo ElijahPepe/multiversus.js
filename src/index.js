@@ -4,10 +4,9 @@ import { fetch } from 'undici';
 import { base, apiKey, userAgent } from './utils/constants.js';
 
 export class Client {
-	constructor(accessToken, clientId) {
+	constructor(accessToken) {
 		this.accessToken = accessToken;
 		this.apiKey = apiKey;
-		this.clientId = clientId;
 		this.userAgent = userAgent;
 	}
 
@@ -32,7 +31,6 @@ export class Client {
 		return fetch(url, {
 			headers: {
 				'x-hydra-api-key': this.apiKey,
-				'x-hydra-client-id': this.clientId,
 				'x-hydra-user-agent': this.userAgent,
 				'x-hydra-access-token': this.accessToken,
 				'Content-Type': 'application/json',
