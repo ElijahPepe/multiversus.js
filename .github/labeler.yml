@@ -1,0 +1,17 @@
+chore:
+  - any: ['*']
+    all: ['!src/*', '!src/**/*', '!documentation/*', '!documentation/**/*', '!test/*', '!typings/*']
+
+'multiversus.js':
+  - src/*
+  - src/**/*
+
+'documentation':
+  - documentation/*
+  - documentation/**/*
+
+'tests':
+  - test/*
+
+'typings':
+  - typings/*
