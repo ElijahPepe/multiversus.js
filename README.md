@@ -21,16 +21,16 @@ yarn add multiversus.js
 
 ## Example usage
 
-Initialize the client using your Steam username and password:
+Initialize the client using your Steam username and password (if your account doesn't have Steam Guard):
 
 ```js
 const { Client } = require('multiversus.js');
 const client = new Client();
 
-client.login('username', 'password'); // You can initialize the client by supplying your Steam username or
+client.login('username', 'password'); // You can initialize the client by supplying your Steam username and password
 ```
 
-Alternatively, initialize the client as follows, using a pre-existing access token:
+Alternatively, initialize the client as follows, using a pre-existing access token. Access tokens can be obtained by analyzing the network requests made by MultiVersus using a tool such as [Fiddler](https://www.telerik.com/fiddler) (if using Fiddler, make sure HTTPS traffic is decrypted):
 
 ```js
 const { Client } = require('multiversus.js');
