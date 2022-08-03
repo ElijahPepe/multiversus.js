@@ -18,6 +18,9 @@ export class Client {
 			} catch (err) {
 				throw new Error('Invalid Steam username or password provided!');
 			}
+			steamUser.on('steamGuard', (_domain, callback) => {
+				console.log(callback);
+			});
 			steamUser.on('loggedOn', async () => {
 				const ticket = await steamUser.getEncryptedAppTicket(1818750, null);
 				const data = await this.info(ticket.encryptedAppTicket.toString('hex'));
