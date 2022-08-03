@@ -1,0 +1,5 @@
+{
+	"name": "multiversus.js",
+	"packagePath": "/",
+	"tagTemplate": "{{new-version}}"
+}
