@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.2.1] - 2022-08-05
+
+## Bug Fixes
+
+- Properly call info() ([70ca434](https://github.com/ElijahPepe/multiversus.js/commit/70ca434704dcde68e718cbd78d2cad47f696507e))
+
 # [1.2.0] - 2022-08-05
 
 ## Bug Fixes
