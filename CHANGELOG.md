@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.2.0] - 2022-08-05
+
+## Bug Fixes
+
+- Fix Steam auth ([112b4a5](https://github.com/ElijahPepe/multiversus.js/commit/112b4a5f50ecfb27cf207f46d17df79a57617953))
+
+## Features
+
+- Add Rick Sanchez to character data ([21dbe3b](https://github.com/ElijahPepe/multiversus.js/commit/21dbe3b8d7b13444421ba3e6e51c9fb61d7463f5))
+
+## Miscellaneous Tasks
+
+- Add typing for rick ([1dab289](https://github.com/ElijahPepe/multiversus.js/commit/1dab2893c0f29279f61f2dbd208dec0ed8fd2769))
+- Move typedoc to dev dependencies ([6a2d5a6](https://github.com/ElijahPepe/multiversus.js/commit/6a2d5a62eccb7a5e8cc15233c508ed81e2a4a0da))
+
 # [1.1.2] - 2022-08-03
 
 ## Documentation
