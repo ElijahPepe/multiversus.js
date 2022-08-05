@@ -26,7 +26,7 @@ export class Client {
 			if (!username || !password || typeof username !== 'string' || typeof password !== 'string') {
 				throw new Error('Invalid username or password provided.');
 			}
-			this.steamUser.logOn({ accountName: username, password: password });
+			this.steamUser.logOn({ accountName: username, password: password, twoFactorCode: twoFactorCode });
 			this.steamUser.on('steamGuard', (_domain, callback) => {
 				callback(twoFactorCode);
 			});
@@ -89,8 +89,8 @@ export class Client {
 						'maintenance',
 						'wb_network',
 					],
-					accessToken: false,
 				}),
+				accessToken: false,
 			});
 			this.handleData(data, resolve, reject);
 		});
