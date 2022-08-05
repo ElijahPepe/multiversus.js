@@ -15,40 +15,52 @@ export class Client {
 			this.accessToken = null;
 		}
 
+		this.steamUser = new SteamUser();
 		this.steamTicket = null;
 		this.apiKey = apiKey;
 		this.userAgent = userAgent;
 	}
 
-	login(username, password) {
+	login(username, password, twoFactorCode) {
 		return new Promise((resolve) => {
 			if (!username || !password || typeof username !== 'string' || typeof password !== 'string') {
 				throw new Error('Invalid username or password provided.');
 			}
-			const steamUser = new SteamUser();
-			try {
-				steamUser.logOn({ accountName: username, password });
-			} catch (err) {
-				throw new Error('Invalid Steam username or password provided!');
-			}
-			steamUser.on('loggedOn', async () => {
-				const ticket = await steamUser.getEncryptedAppTicket(1818750, null);
-				this.steamTicket = ticket.encryptedAppTicket.toString('hex');
-				const data = await this.info(ticket.encryptedAppTicket.toString('hex'));
-				this.accessToken = data.token;
+			this.steamUser.logOn({ accountName: username, password: password });
+			this.steamUser.on('steamGuard', (_domain, callback) => {
+				callback(twoFactorCode);
 			});
-			resolve(this);
+			this.steamUser.on('loggedOn', () => {
+				this.steamUser.getEncryptedAppTicket(1818750, async (err, appTicket) => {
+					if (err) {
+						throw new Error(err);
+					}
+
+					const data = await this.info(appTicket.toString('hex').toUpperCase());
+
+					this.accessToken = data.token;
+					resolve(this);
+				});
+			});
 		});
 	}
 
-	fetchData({ url, method = 'GET', body = null } = {}) {
-		return fetch(url, {
-			headers: {
+	fetchData({ url, method = 'GET', body = null, accessToken = true } = {}) {
+		let headers = {
+			'x-hydra-api-key': this.apiKey,
+			'x-hydra-user-agent': this.userAgent,
+			'x-hydra-access-token': this.accessToken,
+			'Content-Type': 'application/json',
+		};
+		if (!accessToken) {
+			headers = {
 				'x-hydra-api-key': this.apiKey,
 				'x-hydra-user-agent': this.userAgent,
-				'x-hydra-access-token': this.accessToken,
 				'Content-Type': 'application/json',
-			},
+			};
+		}
+		return fetch(url, {
+			headers: headers,
 			method,
 			body,
 			// eslint-disable-next-line arrow-body-style
@@ -60,7 +72,7 @@ export class Client {
 
 	info(steamTicket) {
 		return new Promise(async (resolve, reject) => {
-			if (!steamTicket || !this.steamTicket) {
+			if (!steamTicket && !this.steamTicket) {
 				throw new Error('A Steam ticket must be provided.');
 			}
 			const data = await this.fetchData({
@@ -77,6 +89,7 @@ export class Client {
 						'maintenance',
 						'wb_network',
 					],
+					accessToken: false,
 				}),
 			});
 			this.handleData(data, resolve, reject);
