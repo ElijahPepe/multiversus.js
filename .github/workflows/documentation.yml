@@ -45,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: api-extractor
-          path: api-docs/multiversus.js.api.json
+          path: api-docs/main.api.json
 
       - name: Set outputs for upload job
         id: env
@@ -91,7 +91,7 @@ jobs:
       - name: Move docs
         run: |
           mkdir -p out/multiversus.js
-          mv api-docs/multiversus.js.api.json out/multiversus.js/multiversus.js.api.json
+          mv api-docs/main.api.json out/multiversus.js/main.api.json
 
       - name: Commit and push
         run: |
