@@ -5,6 +5,7 @@
 	"scripts": {
 		"lint": "prettier --check . && eslint . && tslint typings/index.d.ts",
 		"format": "prettier --write . && eslint . --fix",
+		"docs": "api-extractor run --local",
 		"changelog": "git cliff --prepend ./CHANGELOG.md -u -c ./cliff.toml",
 		"release": "cliff-jumper --skip-tag"
 	},
@@ -29,6 +30,7 @@
 		"@commitlint/cli": "^17.0.3",
 		"@commitlint/config-angular": "^17.0.3",
 		"@favware/cliff-jumper": "^1.8.6",
+		"@microsoft/api-extractor": "^7.29.0",
 		"eslint": "^8.20.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-import": "^2.26.0",

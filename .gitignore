@@ -3,3 +3,9 @@ node_modules/
 
 # Env
 test/auth.js
+
+# Dist
+dist/
+typings/tsdoc-metadata.json
+api-docs/
+temp/
