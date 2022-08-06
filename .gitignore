@@ -9,3 +9,4 @@ dist/
 typings/tsdoc-metadata.json
 api-docs/
 temp/
+etc/
