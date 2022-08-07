@@ -28,7 +28,7 @@ export class Client {
 	info(steamTicket?: string): Promise<any>;
 
 	/**
-	 * Search for users from a username.
+	 * Searches for users from a username.
 	 * @param {string} username Username to search for
 	 * @param {number} [limit=25] Limit of users to return.
 	 * @returns {Promise<searchResponse>}
@@ -38,26 +38,26 @@ export class Client {
 	searchByUsername(username: string, limit?: number): Promise<any>;
 
 	/**
-	 * Fetch a match from an ID.
+	 * Fetches a match from an ID.
 	 * @param {string} id The ID of the match to fetch
 	 */
 	getMatch(id: string): Promise<any>;
 
 	/**
-	 * Fetch a profile from an ID.
+	 * Fetches a profile from an ID.
 	 * @param {string} id The ID of the profile to fetch
 	 */
 	getProfile(id: string): Promise<ProfileResponse>;
 
 	/**
-	 * Fetch the leaderboard of a user.
+	 * Fetches the leaderboard of a user.
 	 * @param {string} id The ID of the user.
 	 * @param {leaderboardType} type The leaderboard type to fetch.
 	 */
 	getProfileLeaderboard(id: string, type: LeaderboardType): Promise<any>;
 
 	/**
-	 * Fetch the leaderboard of a user with a character.
+	 * Fetches the leaderboard of a user with a character.
 	 * @param {string} id The ID of the user.
 	 * @param {leaderboardType} type The leaderboard type to fetch.
 	 * @param {string} character The character to fetch.
@@ -65,32 +65,32 @@ export class Client {
 	getProfileLeaderboardForCharacter(id: string, type: LeaderboardType, character: string): Promise<any>;
 
 	/**
-	 * Fetch the global leaderboard.
+	 * Fetches the global leaderboard.
 	 * @param {leaderboardType} type The type of leaderboard to fetch.
 	 */
 	getLeaderboard(type: LeaderboardType): Promise<any>;
 
 	/**
-	 * Fetch a page of matches of a user.
+	 * Fetches a page of matches of a user.
 	 * @param {string} id The ID of the user.
 	 * @param {number} [page=1] The match page to fetch.
 	 */
 	getMatches(id: string, page?: number): Promise<any>;
 
 	/**
-	 * Fetch users Battlepass.
+	 * Fetches a user's battle pass.
 	 * @param {string} id The ID of the user.
 	 */
 	getBattlepass(id: string): Promise<any>;
 
 	/**
-	 * Fetch users quests.
+	 * Fetches a user's quests.
 	 * @param {string} id The ID of the user.
 	 */
 	getQuests(id: string): Promise<any>;
 
 	/**
-	 * Fetch users clan(s).
+	 * Fetches the clans of a user.
 	 * @param {string} id The ID of the user.
 	 * @param {number} [page=1] The match page to fetch.
 	 * @param {number} [count=25] The count to fetch.
@@ -159,7 +159,7 @@ export class CharacterData {
 }
 
 /**
- * Types in a leaderboard
+ * Possible values for a leaderboard
  */
 export type LeaderboardType = '2v2' | '1v1';
 
@@ -173,30 +173,42 @@ export type ProfileResponse = {
 	 * @readonly
 	 */
 	id: string;
+
 	/**
 	 * The time the profile was last updated at
 	 * @type {string}
 	 * @readonly
 	 */
 	updated_at: string;
+
 	/**
 	 * The account ID of the profile
 	 * @type {string}
 	 * @readonly
 	 */
 	account_id: string;
+
 	/**
 	 * The time the profile was created at
 	 * @type {string}
 	 * @readonly
 	 */
 	created_at: string;
+
 	/**
 	 * The time the user last logged in at
 	 * @type {string}
 	 * @readonly
 	 */
 	last_login: string;
+
+	/**
+	 * The number of points the user has
+	 * @type {?boolean}
+	 * @readonly
+	 */
+	points: boolean | null;
+
 	data: {
 		/**
 		 * Whether the user is a child or not
@@ -204,24 +216,110 @@ export type ProfileResponse = {
 		 * @readonly
 		 */
 		IsChildAccount: boolean;
+
+		/**
+		 * The perk preferences of the user
+		 * @type {PerkPreferences}
+		 * @readonly
+		 */
+		PerkPreferences: PerkPreferences;
+
+		/**
+		 * Whether the 2v2 prompt is shown
+		 * @type {number}
+		 * @readonly
+		 */
+		'2v2_prompt_shown': number;
 	};
-	server_data: {
-		stat_trackers: {
-			HighestDamageDealt: number;
-			TotalAttacksDodged: number;
-			TotalAssists: number;
-			TotalRingoutLeader: number;
-			TotalRingouts: number;
-			TotalWins: number;
-			TotalDoubleRingouts: number;
-		};
-		lifetime_damage: number;
-		lifetime_ringouts: number;
-		matches_played: number;
-		sets_played: number;
-	};
+
+	/**
+	 * The user's server data
+	 * @type {ServerData}
+	 * @readonly
+	 */
+	server_data: ServerData;
+
+	/**
+	 * The user's match data, by mode
+	 * @type {ModeStats}
+	 * @readonly
+	 */
+	matches: ModeStats;
+
+	/**
+	 * The user's cross match results
+	 * @type {Object}
+	 * @readonly
+	 */
+	cross_match_results: Object;
+
+	/**
+	 * The user's notifications
+	 * @type {Object}
+	 * @readonly
+	 */
+	notifications: Object;
+
+	/**
+	 * Aggregates for the user
+	 * @type {Object}
+	 * @readonly
+	 */
+	aggregates: Object;
+
+	/**
+	 * Calculations for the user
+	 * @type {Object}
+	 * @readonly
+	 */
+	calculations: Object;
+
+	/**
+	 * An array of files
+	 * @type {Object[]}
+	 * @readonly
+	 */
+	files: Object[];
+
+	/**
+	 * An array of user segments
+	 * @type {string[]}
+	 * @readonly
+	 */
+	user_segments: string[];
+
+	/**
+	 * The user's random distribution
+	 * @type {number}
+	 * @readonly
+	 */
+	random_distribution: number;
+
+	/**
+	 * The user's stats in 2v2s
+	 * @type {ModeData}
+	 * @readonly
+	 */
+	'2v2': ModeData;
+
+	/**
+	 * The user's stats in ffa matches
+	 * @type {ModeData}
+	 * @readonly
+	 */
+	ffa: ModeData;
+
+	/**
+	 * The user's stats in 1v1s
+	 * @type {ModeData}
+	 * @readonly
+	 */
+	'1v1': ModeData;
 };
 
+/**
+ * API response for searches
+ */
 export type SearchResponse = {
 	/**
 	 * The cursor of the search
@@ -229,24 +327,28 @@ export type SearchResponse = {
 	 * @readonly
 	 */
 	cursor: string;
+
 	/**
 	 * The start of the search
 	 * @type {number}
 	 * @readonly
 	 */
 	start: number;
+
 	/**
 	 * The number of results returned by this query
 	 * @type {number}
 	 * @readonly
 	 */
 	count: number;
+
 	/**
 	 * The total number of results
 	 * @type {number}
 	 * @readonly
 	 */
 	total: number;
+
 	/**
 	 * The results of this query
 	 * @type {SearchResult[]|[]}
@@ -255,17 +357,264 @@ export type SearchResponse = {
 	results: SearchResult[] | [];
 };
 
+/**
+ * API response for search results
+ */
 export type SearchResult = {
 	/**
 	 * The score of the result
-	 * @type {null|number}
+	 * @type {?number}
 	 * @readonly
 	 */
-	score: null | number;
+	score: number | null;
+
 	/**
 	 * The result
 	 * @type {ProfileResponse}
 	 * @readonly
 	 */
 	result: ProfileResponse;
+};
+
+/**
+ * API response for perk preferences
+ */
+export type PerkPreferences = {
+	/**
+	 * Object of characters
+	 * @type {Object}
+	 * @readonly
+	 */
+	Characters: Object;
+};
+
+/**
+ * API response for a user's server data
+ */
+export type ServerData = {
+	/**
+	 * Debug flag specifying if the user has everything unlocked
+	 * @type {number}
+	 * @readonly
+	 */
+	debug_all_unlocked: number;
+
+	/**
+	 * The user's level
+	 * @type {number}
+	 * @readonly
+	 */
+	Level: number;
+
+	/**
+	 * The user's current XP
+	 * @type {number}
+	 * @readonly
+	 */
+	CurrentXP: number;
+
+	/**
+	 * The user's loss streak
+	 * @type {number}
+	 * @readonly
+	 */
+	loss_streak: number;
+
+	/**
+	 * The user's battle pass ID
+	 * @type {string}
+	 * @readonly
+	 */
+	BattlepassID: string;
+
+	/**
+	 * An object containing stat trackers
+	 * @type {StatTrackers}
+	 * @readonly
+	 */
+	stat_trackers: StatTrackers;
+
+	/**
+	 * The user's unclaimed character mastery rewards
+	 * @type {Object}
+	 * @readonly
+	 */
+	UnclaimedCharacterMasteryRewards: Object;
+
+	/**
+	 * The user's lifetime damage
+	 * @type {number}
+	 * @readonly
+	 */
+	lifetime_damage: number;
+
+	/**
+	 * The user's lifetime ringouts
+	 * @type {number}
+	 * @readonly
+	 */
+	lifetime_ringouts: number;
+
+	/**
+	 * The number of matches a user has played
+	 * @type {number}
+	 * @readonly
+	 */
+	matches_played: number;
+
+	/**
+	 * The number of sets a user has played
+	 * @type {number}
+	 * @readonly
+	 */
+	sets_played: number;
+
+	/**
+	 * An objects of the user's owned perks by character
+	 * @type {Object}
+	 * @readonly
+	 */
+	OwnedPerks: Object;
+
+	/**
+	 * Data on a users's performance in 1v1s, for use in matchmaking
+	 * @type {Object}
+	 * @readonly
+	 */
+	'1v1shuffle': Object;
+
+	/**
+	 * Data on the user's characters
+	 * @type {Object}
+	 * @readonly
+	 */
+	Characters: Object;
+
+	/**
+	 * Data on a users's performance in 2v2s, for use in matchmaking
+	 * @type {Object}
+	 * @readonly
+	 */
+	'2v2shuffle': Object;
+
+	/**
+	 * An array of IDs the user recently toasted
+	 * @type {string[]|[]}
+	 * @readonly
+	 */
+	RecentlyToasted: string[] | [];
+};
+
+/**
+ * API response for a user's tracked stats
+ */
+export type StatTrackers = {
+	/**
+	 * The user's highest damage dealt
+	 * @type {number}
+	 * @readonly
+	 */
+	HighestDamageDealt: number;
+
+	/**
+	 * The user's total attacks dodged
+	 * @type {number}
+	 * @readonly
+	 */
+	TotalAttacksDodged: number;
+
+	/**
+	 * The user's total assists
+	 * @type {number}
+	 * @readonly
+	 */
+	TotalAssists: number;
+
+	/**
+	 * The user's total number of times they've been a ringout leader
+	 * @type {number}
+	 * @readonly
+	 */
+	TotalRingoutLeader: number;
+
+	/**
+	 * The user's total ringouts
+	 * @type {number}
+	 * @readonly
+	 */
+	TotalRingouts: number;
+
+	/**
+	 * The user's total wins
+	 * @type {number}
+	 * @readonly
+	 */
+	TotalWins: number;
+
+	/**
+	 * The user's character wins
+	 * @type {Object}
+	 * @readonly
+	 */
+	character_wins: object;
+
+	/**
+	 * The user's total double ringouts
+	 * @type {number}
+	 * @readonly
+	 */
+	TotalDoubleRingouts: number;
+};
+
+export type ModeStats = {
+	/**
+	 * The user's stats for 2v2s
+	 * @type {ModeData}
+	 * @readonly
+	 */
+	'2v2': ModeData;
+
+	/**
+	 * The user's stats for ffa matches
+	 * @type {ModeData}
+	 * @readonly
+	 */
+	ffa: ModeData;
+
+	/**
+	 * The user's stats for 1v1s
+	 * @type {ModeData}
+	 * @readonly
+	 */
+	'1v1': ModeData;
+};
+
+export type ModeData = {
+	/**
+	 * The number of losses the user has in this mode
+	 * @type {number}
+	 * @readonly
+	 */
+	loss: number;
+
+	/**
+	 * The win streak the user has in this mode
+	 * @type {number}
+	 * @readonly
+	 */
+	win_streak: number;
+
+	/**
+	 * The longest win streak the user has had in this mode
+	 * @type {number}
+	 * @readonly
+	 */
+	longest_win_streak: number;
+
+	/**
+	 * The number of wins the user has in this mode
+	 * @type {number}
+	 * @readonly
+	 */
+	win: number;
 };
