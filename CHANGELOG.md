@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.3.0] - 2022-08-08
+
+## Bug Fixes
+
+- Remove arrow parens ([98571d5](https://github.com/ElijahPepe/multiversus.js/commit/98571d5d5c0e460078053efdb18f208ed9bb7eac))
+- Use CommonJS imports/exports ([f1084b4](https://github.com/ElijahPepe/multiversus.js/commit/f1084b436b0c0beae8113e42bd1ffd234775d32a))
+
 # [1.2.2] - 2022-08-07
 
 ## Miscellaneous Tasks
