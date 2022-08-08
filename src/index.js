@@ -22,7 +22,7 @@ class Client {
 	}
 
 	login(username, password, twoFactorCode) {
-		return new Promise((resolve) => {
+		return new Promise(resolve => {
 			if (!username || !password || typeof username !== 'string' || typeof password !== 'string') {
 				throw new Error('Invalid username or password provided.');
 			}
@@ -64,7 +64,7 @@ class Client {
 			method,
 			body,
 			// eslint-disable-next-line arrow-body-style
-		}).then(async (res) => {
+		}).then(async res => {
 			// eslint-disable-next-line no-return-await
 			return await res.json();
 		});
