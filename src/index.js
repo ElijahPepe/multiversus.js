@@ -1,10 +1,10 @@
 /* eslint-disable no-async-promise-executor */
-import process from 'node:process';
-import SteamUser from 'steam-user';
-import { fetch } from 'undici';
-import { base, apiKey, userAgent } from './utils/constants.js';
+const process = require('node:process');
+const SteamUser = require('steam-user');
+const { fetch } = require('undici');
+const { base, apiKey, userAgent } = require('./utils/constants.js');
 
-export class Client {
+class Client {
 	constructor(accessToken) {
 		Object.defineProperty(this, 'accessToken', { writable: true });
 		if (accessToken) {
@@ -264,7 +264,7 @@ export class Client {
 	}
 }
 
-export class CharacterData {
+class CharacterData {
 	static Shaggy = {
 		id: 'character_shaggy',
 		displayName: 'Shaggy',
@@ -373,3 +373,8 @@ export class CharacterData {
 		aliases: ['Rick'],
 	};
 }
+
+module.exports = {
+	Client,
+	CharacterData,
+};

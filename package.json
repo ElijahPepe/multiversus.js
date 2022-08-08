@@ -11,7 +11,6 @@
 	},
 	"main": "./src/index.js",
 	"types": "./typings/index.d.ts",
-	"type": "module",
 	"author": "Elijah Conners <business@elijahpepe.com>",
 	"license": "MIT",
 	"repository": {
