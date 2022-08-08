@@ -27,7 +27,9 @@ Initialize the client using your Steam username and password (if your account do
 const { Client } = require('multiversus.js');
 const client = new Client();
 
-await client.login('username', 'password'); // You can initialize the client by supplying your Steam username and password
+(async () => {
+	await client.login('username', 'password'); // You can initialize the client by supplying your Steam username and password
+})();
 ```
 
 Alternatively, initialize the client as follows, using a pre-existing access token. Access tokens can be obtained by analyzing the network requests made by MultiVersus using a tool such as [Fiddler](https://www.telerik.com/fiddler) (if using Fiddler, make sure HTTPS traffic is decrypted):
@@ -40,22 +42,28 @@ const client = new Client('accessToken');
 Get the MultiVersus 2v2 leaderboard:
 
 ```js
-const leaderboardData = await client.getLeaderboard('2v2'); // The type of the leaderboard to be retrieved can also be set to '1v1'.
-console.log(leaderboardData);
+(async () => {
+	const leaderboardData = await client.getLeaderboard('2v2'); // The type of the leaderboard to be retrieved can also be set to '1v1'.
+	console.log(leaderboardData);
+})();
 ```
 
 Get a profile by a user's ID:
 
 ```js
-const userData = await client.getProfile('62e471bc5f77e966a384a570');
-console.log(userData);
+(async () => {
+	const userData = await client.getProfile('62e471bc5f77e966a384a570');
+	console.log(userData);
+})();
 ```
 
 Search for users:
 
 ```js
-const searchData = await client.searchByUsername('ElijahPepe'); // A second parameter can also be defined to limit the results returned.
-console.log(searchData);
+(async () => {
+	const searchData = await client.searchByUsername('ElijahPepe'); // A second parameter can also be defined to limit the results returned.
+	console.log(searchData);
+})();
 ```
 
 ## Links
