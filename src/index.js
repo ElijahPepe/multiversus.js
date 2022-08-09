@@ -103,13 +103,13 @@ class Client {
 		return resolve(data);
 	}
 
-	searchByUsername(username, limit = 25) {
+	searchByUsername(username, cursor = null, limit = 25) {
 		return new Promise(async (resolve, reject) => {
 			if (!username) {
 				throw new Error('A query must be provided.');
 			}
 			const data = await this.fetchData({
-				url: `${base}/profiles/search_queries/get-by-username/run?username=${username}&limit=${limit}`,
+				url: `${base}/profiles/search_queries/get-by-username/run?username=${username}&limit=${limit}${cursor ? `&cursor=${cursor}` : ''}`,
 			});
 			this.handleData(data, resolve, reject);
 		});
