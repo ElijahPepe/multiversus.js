@@ -50,6 +50,12 @@ export class Client {
 	getProfile(id: string): Promise<ProfileResponse>;
 
 	/**
+	 * Fetches an account from an ID.
+	 * @param {string} id The ID of the account to fetch
+	 */
+	getAccount(id: string): Promise<any>;
+
+	/**
 	 * Fetches the leaderboard of a user.
 	 * @param {string} id The ID of the user.
 	 * @param {leaderboardType} type The leaderboard type to fetch.
@@ -69,6 +75,13 @@ export class Client {
 	 * @param {leaderboardType} type The type of leaderboard to fetch.
 	 */
 	getLeaderboard(type: LeaderboardType): Promise<any>;
+
+	/**
+	 * Fetches the global leaderboard for a character.
+	 * @param {leaderboardType} type The type of leaderboard to fetch.
+	 * @param {string} character The character leaderboard to fetch.
+	 */
+	getLeaderboardForCharacter(type: LeaderboardType, character: string): Promise<any>;
 
 	/**
 	 * Fetches a page of matches of a user.
@@ -105,54 +118,71 @@ export class CharacterData {
 	static Shaggy: {
 		id: string;
 	};
+
 	static WonderWoman: {
 		id: string;
 	};
+
 	static Batman: {
 		id: string;
 	};
+
 	static Superman: {
 		id: string;
 	};
+
 	static Taz: {
 		id: string;
 	};
+
 	static IronGiant: {
 		id: string;
 	};
+
 	static Garnet: {
 		id: string;
 	};
+
 	static StevenUniverse: {
 		id: string;
 	};
+
 	static Jake: {
 		id: string;
 	};
+
 	static Reindog: {
 		id: string;
 	};
+
 	static Finn: {
 		id: string;
 	};
+
 	static Velma: {
 		id: string;
 	};
+
 	static AryaStark: {
 		id: string;
 	};
+
 	static BugsBunny: {
 		id: string;
 	};
+
 	static HarleyQuinn: {
 		id: string;
 	};
+
 	static TomAndJerry: {
 		id: string;
 	};
+
 	static LeBronJames: {
 		id: string;
 	};
+
 	static RickSanchez: {
 		id: string;
 	};
