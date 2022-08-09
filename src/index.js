@@ -103,7 +103,7 @@ class Client {
 		return resolve(data);
 	}
 
-	searchByUsername(username, cursor = null, limit = 25) {
+	searchByUsername(username, limit = 25, cursor = null) {
 		return new Promise(async (resolve, reject) => {
 			if (!username) {
 				throw new Error('A query must be provided.');
