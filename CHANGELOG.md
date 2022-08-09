@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.3.1] - 2022-08-09
+
+## Features
+
+- Add typings for missing Client methods ([9cdc146](https://github.com/ElijahPepe/multiversus.js/commit/9cdc146dbb4dd0b69a068985e8629dd0a57232ad))
+
 # [1.3.0] - 2022-08-08
 
 ## Bug Fixes
