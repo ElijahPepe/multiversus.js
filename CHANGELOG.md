@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+# [1.4.0] - 2022-08-15
+
+## Features
+
+- Add cursor to profile searching ([ebc19d1](https://github.com/ElijahPepe/multiversus.js/commit/ebc19d11ba2308e618877ec37747d64c797a6062))
+
+## Miscellaneous Tasks
+
+- Implement a minimum node version ([ecaf494](https://github.com/ElijahPepe/multiversus.js/commit/ecaf494a7e919a87a0e0e08a0152962c231f1eab))
+- Make change non-breaking ([b7c1365](https://github.com/ElijahPepe/multiversus.js/commit/b7c1365123b06250759cb7d38ca00d5ad0de3d02))
+
 # [1.3.1] - 2022-08-09
 
 ## Features
