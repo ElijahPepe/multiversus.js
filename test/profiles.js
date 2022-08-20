@@ -6,7 +6,7 @@ const client = new Client({ accessToken });
 
 (async () => {
 	const userId = '62e471bc5f77e966a384a570';
-	const userData = await client.profiles.get(userId);
+	const userData = await client.profiles.fetch(userId);
 	try {
 		console.log(userId);
 		assert.strictEqual(userData.account_id, userId);

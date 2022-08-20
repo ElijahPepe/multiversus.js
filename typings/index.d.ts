@@ -1,77 +1,184 @@
-/**
- * Represents character data
- */
+import SteamUser from 'steam-user';
+
+export class Client {
+	public constructor(options: ClientOptions);
+	private _getAccessToken(): Promise<void>;
+
+	public accessToken?: string | null;
+	public steamTicket?: string | null;
+	public apiKey: string;
+	public userAgent: string;
+	public user?: SteamUser | null;
+	public ready: boolean;
+	public profiles: ProfileManager;
+	public matches: MatchManager;
+	public accounts: AccountManager;
+	public leaderboards: LeaderboardManager;
+	public battlepasses: BattlepassManager;
+	public quests: QuestManager;
+	public clans: ClanManager;
+	public destroy(): void;
+	public isReady(): this is Client;
+	public login(username: string, password: string): Promise<string>;
+	public info(steamTicket: string): Promise<Object>;
+}
+
+export interface ClientOptions {
+	accessToken?: string;
+}
+
+export abstract class BaseManager {
+	protected constructor(client: Client);
+	public readonly client: Client;
+}
+
+export class ProfileManager extends BaseManager {
+	private constructor(client: Client);
+	public search(username: string, limit: number, cursor?: string): Promise<SearchResponse>;
+	public fetch(id: string): Promise<ProfileResponse>;
+}
+
+export class MatchManager extends BaseManager {
+	private constructor(client: Client);
+	public fetch(id: string): Promise<Object>;
+	public fetchAll(id: string, page: number): Promise<Object>;
+}
+
+export class AccountManager extends BaseManager {
+	private constructor(client: Client);
+	public fetch(id: string): Promise<Object>;
+}
+
+export class LeaderboardManager extends BaseManager {
+	private constructor(client: Client);
+	public fetch(type: string): Promise<Object>;
+	public fetchCharacter(type: string, character: string): Promise<Object>;
+	public fetchProfile(id: string, type: string): Promise<Object>;
+	public fetchProfileCharacter(id: string, type: string, character: string): Promise<Object>;
+}
+
+export class BattlepassManager extends BaseManager {
+	private constructor(client: Client);
+	public fetch(id: string): Promise<Object>;
+}
+
+export class QuestManager extends BaseManager {
+	private constructor(client: Client);
+	public fetch(id: string): Promise<Object>;
+}
+
+export class ClanManager extends BaseManager {
+	private constructor(client: Client);
+	public fetch(id: string, page: number, count: number): Promise<Object>;
+}
+
 export class CharacterData {
 	static Shaggy: {
 		id: string;
+		displayName: string;
+		aliases: string[];
 	};
 
 	static WonderWoman: {
 		id: string;
+		displayName: string;
+		aliases: string[];
 	};
 
 	static Batman: {
 		id: string;
+		displayName: string;
+		aliases: string[];
 	};
 
 	static Superman: {
 		id: string;
+		displayName: string;
+		aliases: string[];
 	};
 
 	static Taz: {
 		id: string;
+		displayName: string;
+		aliases: string[];
 	};
 
 	static IronGiant: {
 		id: string;
+		displayName: string;
+		aliases: string[];
 	};
 
 	static Garnet: {
 		id: string;
+		displayName: string;
+		aliases: string[];
 	};
 
 	static StevenUniverse: {
 		id: string;
+		displayName: string;
+		aliases: string[];
 	};
 
 	static Jake: {
 		id: string;
+		displayName: string;
+		aliases: string[];
 	};
 
 	static Reindog: {
 		id: string;
+		displayName: string;
+		aliases: string[];
 	};
 
 	static Finn: {
 		id: string;
+		displayName: string;
+		aliases: string[];
 	};
 
 	static Velma: {
 		id: string;
+		displayName: string;
+		aliases: string[];
 	};
 
 	static AryaStark: {
 		id: string;
+		displayName: string;
+		aliases: string[];
 	};
 
 	static BugsBunny: {
 		id: string;
+		displayName: string;
+		aliases: string[];
 	};
 
 	static HarleyQuinn: {
 		id: string;
+		displayName: string;
+		aliases: string[];
 	};
 
 	static TomAndJerry: {
 		id: string;
+		displayName: string;
+		aliases: string[];
 	};
 
 	static LeBronJames: {
 		id: string;
+		displayName: string;
+		aliases: string[];
 	};
 
 	static RickSanchez: {
 		id: string;
+		displayName: string;
+		aliases: string[];
 	};
 }
 
@@ -83,7 +190,7 @@ export type LeaderboardType = '2v2' | '1v1';
 /**
  * API response for requesting a profile
  */
-export type ProfileResponse = {
+export class ProfileResponse {
 	/**
 	 * The internal ID of the profile
 	 * @type {string}
@@ -232,12 +339,12 @@ export type ProfileResponse = {
 	 * @readonly
 	 */
 	'1v1': ModeData;
-};
+}
 
 /**
  * API response for searches
  */
-export type SearchResponse = {
+export class SearchResponse {
 	/**
 	 * The cursor of the search
 	 * @type {string}
@@ -272,12 +379,12 @@ export type SearchResponse = {
 	 * @readonly
 	 */
 	results: SearchResult[] | [];
-};
+}
 
 /**
  * API response for search results
  */
-export type SearchResult = {
+export class SearchResult {
 	/**
 	 * The score of the result
 	 * @type {?number}
@@ -291,24 +398,24 @@ export type SearchResult = {
 	 * @readonly
 	 */
 	result: ProfileResponse;
-};
+}
 
 /**
  * API response for perk preferences
  */
-export type PerkPreferences = {
+export class PerkPreferences {
 	/**
 	 * Object of characters
 	 * @type {Object}
 	 * @readonly
 	 */
 	Characters: Object;
-};
+}
 
 /**
  * API response for a user's server data
  */
-export type ServerData = {
+export class ServerData {
 	/**
 	 * Debug flag specifying if the user has everything unlocked
 	 * @type {number}
@@ -420,12 +527,12 @@ export type ServerData = {
 	 * @readonly
 	 */
 	RecentlyToasted: string[] | [];
-};
+}
 
 /**
  * API response for a user's tracked stats
  */
-export type StatTrackers = {
+export class StatTrackers {
 	/**
 	 * The user's highest damage dealt
 	 * @type {number}
@@ -481,9 +588,9 @@ export type StatTrackers = {
 	 * @readonly
 	 */
 	TotalDoubleRingouts: number;
-};
+}
 
-export type ModeStats = {
+export class ModeStats {
 	/**
 	 * The user's stats for 2v2s
 	 * @type {ModeData}
@@ -504,9 +611,9 @@ export type ModeStats = {
 	 * @readonly
 	 */
 	'1v1': ModeData;
-};
+}
 
-export type ModeData = {
+export class ModeData {
 	/**
 	 * The number of losses the user has in this mode
 	 * @type {number}
@@ -534,4 +641,4 @@ export type ModeData = {
 	 * @readonly
 	 */
 	win: number;
-};
+}

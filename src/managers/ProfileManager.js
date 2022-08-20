@@ -34,7 +34,7 @@ class ProfileManager extends BaseManager {
 	 * @param {string} id The ID of the user to fetch
 	 * @returns {Promise<ProfileResponse>}
 	 */
-	get(id) {
+	fetch(id) {
 		return new Promise(async (resolve, reject) => {
 			if (!id) {
 				throw new Error('A user ID must be provided.');

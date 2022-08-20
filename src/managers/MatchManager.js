@@ -7,6 +7,11 @@ const { fetchData, handleData } = require('../util/Data.js');
  * @extends {BaseManager}
  */
 class MatchManager extends BaseManager {
+	/**
+	 * Obtains match info from MultiVersus
+	 * @param {string} id The ID of the natch to fetch
+	 * @returns {Promise<Object>}
+	 */
 	fetch(id) {
 		return new Promise(async (resolve, reject) => {
 			if (!id) {
@@ -20,6 +25,12 @@ class MatchManager extends BaseManager {
 		});
 	}
 
+	/**
+	 * Obtains all matches from MultiVersus
+	 * @param {string} id The ID of the natch to fetch
+	 * @param {number} page The page
+	 * @returns {Promise<Object>}
+	 */
 	fetchAll(id, page = 1) {
 		return new Promise(async (resolve, reject) => {
 			if (!id) {

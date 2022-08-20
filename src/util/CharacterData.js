@@ -1,3 +1,6 @@
+/**
+ * Represents character data
+ */
 class CharacterData {
 	static Shaggy = {
 		id: 'character_shaggy',
