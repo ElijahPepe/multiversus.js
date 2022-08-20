@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+# [2.0.0] - 2022-08-20
+
+## Miscellaneous Tasks
+
+- Bump undici ([f287d0c](https://github.com/ElijahPepe/multiversus.js/commit/f287d0c61e2cc5277912d8d779d3522b8db7e816))
+- Refactor ([e867103](https://github.com/ElijahPepe/multiversus.js/commit/e8671031baef9025cca17e6de1e57bbe9f80c268))
+  - **BREAKING CHANGE:** use managers for API stuff
+  - **BREAKING CHANGE:** use an object for client options
+  - split up typings
+- Restructure project ([6b7388d](https://github.com/ElijahPepe/multiversus.js/commit/6b7388d295db66a346234f00a4acd74a79b2611a))
+
 # [1.4.0] - 2022-08-15
 
 ## Features
