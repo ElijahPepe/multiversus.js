@@ -1,82 +1,160 @@
 /* eslint-disable no-async-promise-executor */
 const process = require('node:process');
 const SteamUser = require('steam-user');
-const { fetch } = require('undici');
-const { base, apiKey, userAgent } = require('../util/Constants.js');
+const AccountManager = require('../managers/AccountManager');
+const BattlepassManager = require('../managers/BattlepassManager');
+const ClanManager = require('../managers/ClanManager');
+const LeaderboardManager = require('../managers/LeaderboardManager');
+const MatchManager = require('../managers/MatchManager');
+const ProfileManager = require('../managers/ProfileManager');
+const QuestManager = require('../managers/QuestManager');
+const { apiKey, userAgent } = require('../util/Constants.js');
+const { fetchData, handleData } = require('../util/Data');
 
+/**
+ * The base client for interacting with the MultiVersus API.
+ */
 class Client {
-	constructor(accessToken) {
+	/**
+	 * @param {ClientOptions} options Options for the client
+	 */
+	constructor(options = {}) {
 		Object.defineProperty(this, 'accessToken', { writable: true });
-		if (accessToken) {
-			this.accessToken = accessToken;
+		if (options?.accessToken) {
+			this.accessToken = options?.accessToken;
 		} else if (!this.accessToken && 'MULTIVERSUS_ACCESS_TOKEN' in process.env) {
 			this.accessToken = process.env.MULTIVERSUS_ACCESS_TOKEN;
 		} else {
 			this.accessToken = null;
 		}
 
-		this.steamUser = new SteamUser();
+		this.steamUser = new SteamUser({ autoRelogin: true, promptSteamGuardCode: false });
+
 		this.steamTicket = null;
+
 		this.apiKey = apiKey;
+
 		this.userAgent = userAgent;
+
+		this.user = null;
+
+		this.ready = false;
+
+		/**
+		 * The profile manager of the client
+		 * @type {ProfileManager}
+		 */
+		this.profiles = new ProfileManager(this);
+
+		/**
+		 * The match manager of the client
+		 * @type {MatchManager}
+		 */
+		this.matches = new MatchManager(this);
+
+		/**
+		 * The account manager of the client
+		 * @type {AccountManager}
+		 */
+		this.accounts = new AccountManager(this);
+
+		/**
+		 * The leaderboard manager of the client
+		 * @type {LeaderboardManager}
+		 */
+		this.leaderboards = new LeaderboardManager(this);
+
+		/**
+		 * The battlepass manager of the client
+		 * @type {BattlepassManager}
+		 */
+		this.battlepasses = new BattlepassManager(this);
+
+		/**
+		 * The quest manager of the client
+		 * @type {QuestManager}
+		 */
+		this.quests = new QuestManager(this);
+
+		/**
+		 * The clan manager of the client
+		 * @type {ClanManager}
+		 */
+		this.clans = new ClanManager(this);
 	}
 
-	login(username, password, twoFactorCode) {
+	/**
+	 * Creates an access token, allowing you to access the MultiVersus API.
+	 * @param {string} username Username of the account to log in with
+	 * @param {string} password Password of the account to log in with
+	 * @returns {Promise<string>} The access token
+	 * @example
+	 * client.login('username', 'password');
+	 */
+	login(username, password) {
+		this.ready = false;
+		this.steamUser.logOn({ accountName: username, password: password });
+		this.steamUser.on('debug', debug => {
+			console.log(debug);
+		});
+		this.steamUser.on('loggedOn', async () => {
+			await this._getAccessToken();
+		});
+		this.ready = true;
+		return this.accessToken;
+	}
+
+	/**
+	 * Returns whether or not the client is ready.
+	 * @returns {boolean}
+	 */
+	isReady() {
+		return this.ready;
+	}
+
+	_getAccessToken() {
 		return new Promise(resolve => {
-			if (!username || !password || typeof username !== 'string' || typeof password !== 'string') {
-				throw new Error('Invalid username or password provided.');
-			}
-			this.steamUser.logOn({ accountName: username, password: password, twoFactorCode: twoFactorCode });
-			this.steamUser.on('steamGuard', (_domain, callback) => {
-				callback(twoFactorCode);
-			});
-			this.steamUser.on('loggedOn', () => {
-				this.steamUser.getEncryptedAppTicket(1818750, async (err, appTicket) => {
-					if (err) {
-						throw new Error(err);
-					}
+			this.steamUser.getEncryptedAppTicket(1818750, async (err, appTicket) => {
+				this.steamTicket = appTicket.toString('hex').toUpperCase();
+				if (err) {
+					throw new Error(err);
+				}
 
-					const data = await this.info(appTicket.toString('hex').toUpperCase());
+				const data = await this.info(appTicket.toString('hex').toUpperCase());
+				this.accessToken = data.token;
 
-					this.accessToken = data.token;
-					resolve(this);
-				});
+				resolve(this);
 			});
 		});
 	}
 
-	fetchData({ url, method = 'GET', body = null, accessToken = true } = {}) {
-		let headers = {
-			'x-hydra-api-key': this.apiKey,
-			'x-hydra-user-agent': this.userAgent,
-			'x-hydra-access-token': this.accessToken,
-			'Content-Type': 'application/json',
-		};
-		if (!accessToken) {
-			headers = {
-				'x-hydra-api-key': this.apiKey,
-				'x-hydra-user-agent': this.userAgent,
-				'Content-Type': 'application/json',
-			};
+	/**
+	 * Destroys the client and logs out of Steam gracefully.
+	 * @returns {void}
+	 */
+	destroy() {
+		super.destroy();
+
+		if (this.steamTicket) {
+			this.SteamUser.logOff();
 		}
-		return fetch(url, {
-			headers: headers,
-			method,
-			body,
-			// eslint-disable-next-line arrow-body-style
-		}).then(async res => {
-			// eslint-disable-next-line no-return-await
-			return await res.json();
-		});
+		this.accessToken = null;
 	}
 
+	/**
+	 * Gets info about a Steam user
+	 * @param {string} steamTicket Steam ticket of the user to log in with
+	 * @returns {Promise<Object>} The info
+	 * @example
+	 * client.info('steamTicket');
+	 */
 	info(steamTicket) {
 		return new Promise(async (resolve, reject) => {
 			if (!steamTicket && !this.steamTicket) {
 				throw new Error('A Steam ticket must be provided.');
 			}
-			const data = await this.fetchData({
-				url: `${base}/access`,
+			const data = await fetchData({
+				url: `/access`,
 				method: 'POST',
 				body: JSON.stringify({
 					auth: { fail_on_missing: true, steam: this.steamTicket ? this.steamTicket : steamTicket },
@@ -92,179 +170,17 @@ class Client {
 				}),
 				accessToken: false,
 			});
-			this.handleData(data, resolve, reject);
-		});
-	}
-
-	handleData(data, resolve, reject) {
-		if (data.msg) {
-			return reject(new Error(data.msg));
-		}
-		return resolve(data);
-	}
-
-	searchByUsername(username, limit = 25, cursor = null) {
-		return new Promise(async (resolve, reject) => {
-			if (!username) {
-				throw new Error('A query must be provided.');
-			}
-			const data = await this.fetchData({
-				// eslint-disable-next-line max-len
-				url: `${base}/profiles/search_queries/get-by-username/run?username=${username}&limit=${limit}${
-					cursor ? `&cursor=${cursor}` : ''
-				}`,
-			});
-			this.handleData(data, resolve, reject);
-		});
-	}
-
-	getMatch(id) {
-		return new Promise(async (resolve, reject) => {
-			if (!id) {
-				throw new Error('A match ID must be provided.');
-			}
-			const data = await this.fetchData({
-				url: `${base}/matches/${id}`,
-			});
-			this.handleData(data, resolve, reject);
-		});
-	}
-
-	getProfile(id) {
-		return new Promise(async (resolve, reject) => {
-			if (!id) {
-				throw new Error('A user ID must be provided.');
-			}
-			const data = await this.fetchData({
-				url: `${base}/profiles/${id}`,
-			});
-			this.handleData(data, resolve, reject);
-		});
-	}
-
-	getAccount(id) {
-		return new Promise(async (resolve, reject) => {
-			if (!id) {
-				throw new Error('A user ID must be provided.');
-			}
-			const data = await this.fetchData({
-				url: `${base}/accounts/${id}`,
-			});
-			this.handleData(data, resolve, reject);
-		});
-	}
-
-	getProfileLeaderboard(id, type) {
-		return new Promise(async (resolve, reject) => {
-			if (type !== '2v2' && type !== '1v1') {
-				return reject(new Error('Leaderboard type must be 1v1 or 2v2.'));
-			}
-			if (!id) {
-				return reject(new Error('A user ID must be provided.'));
-			}
-			const data = await this.fetchData({
-				url: `${base}/leaderboards/${type}/score-and-rank/${id}`,
-			});
-			this.handleData(data, resolve, reject);
-		});
-	}
-
-	getProfileLeaderboardForCharacter(id, type, character) {
-		return new Promise(async (resolve, reject) => {
-			if (type !== '2v2' && type !== '1v1') {
-				return reject(new Error('Leaderboard type must be 1v1 or 2v2.'));
-			}
-			if (!id) {
-				return reject(new Error('A user ID must be provided.'));
-			}
-			if (!character) {
-				return reject(new Error('A character must be provided.'));
-			}
-			const data = await this.fetchData({
-				url: `${base}/leaderboards/${character}_${type}/score-and-rank/${id}`,
-			});
-			this.handleData(data, resolve, reject);
-		});
-	}
-
-	getLeaderboard(type) {
-		return new Promise(async (resolve, reject) => {
-			if (type !== '2v2' && type !== '1v1') {
-				return reject(new Error('Leaderboard type must be 1v1 or 2v2.'));
-			}
-			const data = await this.fetchData({
-				url: `${base}/leaderboards/${type}/show`,
-			});
-			this.handleData(data, resolve, reject);
-		});
-	}
-
-	getLeaderboardForCharacter(type, character) {
-		return new Promise(async (resolve, reject) => {
-			if (!this.ready) {
-				return reject(new Error('Client is not ready.'));
-			}
-
-			if (type !== '2v2' && type !== '1v1') {
-				return reject(new Error('Leaderboard type must be 1v1 or 2v2.'));
-			}
-			if (!character) {
-				return reject(new Error('A character must be provided.'));
-			}
-			const data = await this.fetchData({
-				url: `${base}/leaderboards/${character}_${type}/show`,
-			});
-			this.handleData(data, resolve, reject);
-		});
-	}
-
-	getMatches(id, page = 1) {
-		return new Promise(async (resolve, reject) => {
-			if (!id) {
-				return reject(new Error('A user ID must be provided.'));
-			}
-			const data = await this.fetchData({
-				url: `${base}/matches/all/${id}?page=${page}`,
-			});
-			this.handleData(data, resolve, reject);
-		});
-	}
-
-	getBattlepass(id) {
-		return new Promise(async (resolve, reject) => {
-			if (!id) {
-				throw new Error('A user ID must be provided.');
-			}
-			const data = await this.fetchData({
-				url: `${base}/ssc/invoke/get_battlepass?AccountID=${id}`,
-			});
-			this.handleData(data, resolve, reject);
-		});
-	}
-
-	getQuests(id) {
-		return new Promise(async (resolve, reject) => {
-			if (!id) {
-				throw new Error('A user ID must be provided.');
-			}
-			const data = await this.fetchData({
-				url: `${base}/ssc/invoke/get_quests?AccountID=${id}`,
-			});
-			this.handleData(data, resolve, reject);
-		});
-	}
-
-	getClan(id, page = 1, count = 25) {
-		return new Promise(async (resolve, reject) => {
-			if (!id) {
-				return reject(new Error('A user ID must be provided.'));
-			}
-			const data = await this.fetchData({
-				url: `${base}/clans/pfg-clan/for/${id}?count=${count}&page=${page}`,
-			});
-			this.handleData(data, resolve, reject);
+			handleData(data, resolve, reject);
+			this.user = data;
+			return this.user;
 		});
 	}
 }
 
 module.exports = Client;
+
+/**
+ * Client options.
+ * @typedef {Object} ClientOptions
+ * @property {string} [accessToken] The access token of the user
+ */

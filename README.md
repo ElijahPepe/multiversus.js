@@ -36,14 +36,14 @@ Alternatively, initialize the client as follows, using a pre-existing access tok
 
 ```js
 const { Client } = require('multiversus.js');
-const client = new Client('accessToken');
+const client = new Client({ 'accessToken' });
 ```
 
 Get the MultiVersus 2v2 leaderboard:
 
 ```js
 (async () => {
-	const leaderboardData = await client.getLeaderboard('2v2'); // The type of the leaderboard to be retrieved can also be set to '1v1'.
+	const leaderboardData = await client.leaderboards.fetch('2v2'); // The type of the leaderboard to be retrieved can also be set to '1v1'.
 	console.log(leaderboardData);
 })();
 ```
@@ -52,7 +52,7 @@ Get a profile by a user's ID:
 
 ```js
 (async () => {
-	const userData = await client.getProfile('62e471bc5f77e966a384a570');
+	const userData = await client.profiles.fetch('62e471bc5f77e966a384a570');
 	console.log(userData);
 })();
 ```
@@ -61,7 +61,7 @@ Search for users:
 
 ```js
 (async () => {
-	const searchData = await client.searchByUsername('ElijahPepe'); // A second parameter can also be defined to limit the results returned.
+	const searchData = await client.profiles.search('ElijahPepe'); // A second parameter can also be defined to limit the results returned.
 	console.log(searchData);
 })();
 ```
