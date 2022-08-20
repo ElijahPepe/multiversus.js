@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# [2.0.1] - 2022-08-20
+
+## Miscellaneous Tasks
+
+- Update typings ([e0de5a0](https://github.com/ElijahPepe/multiversus.js/commit/e0de5a0761e69f0e4a0f8b371af1e61aa4929293))
+
 # [2.0.0] - 2022-08-20
 
 ## Miscellaneous Tasks
