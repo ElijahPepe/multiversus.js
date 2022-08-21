@@ -11,8 +11,8 @@ class ClanManager extends BaseManager {
 	 * Obtains clan info from MultiVersus.
 	 * This is a planned feature and as such no data is returned.
 	 * @param {string} id The ID of the user to fetch
-	 * @param {number} page The page
-	 * @param {number} count The number of entries
+	 * @param {number?} page The page
+	 * @param {number?} count The number of entries
 	 * @returns {Promise<Object>}
 	 */
 	fetch(id, page = 1, count = 25) {

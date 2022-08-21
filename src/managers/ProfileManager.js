@@ -10,8 +10,8 @@ class ProfileManager extends BaseManager {
 	/**
 	 * Searches for a user from Multiversus
 	 * @param {string} username The username to search for
-	 * @param {limit} limit The number of entries
-	 * @param {?string} cursor The cursor
+	 * @param {limit?} limit The number of entries
+	 * @param {string?} cursor The cursor
 	 * @returns {Promise<SearchResponse>}
 	 */
 	search(username, limit = 25, cursor = null) {

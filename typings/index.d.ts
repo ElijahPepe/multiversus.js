@@ -34,7 +34,7 @@ export abstract class BaseManager {
 
 export class ProfileManager extends BaseManager {
 	private constructor(client: Client);
-	public search(username: string, limit: number, cursor?: string): Promise<SearchResponse>;
+	public search(username: string, limit?: number, cursor?: string): Promise<SearchResponse>;
 	public fetch(id: string): Promise<ProfileResponse>;
 }
 
@@ -69,7 +69,7 @@ export class QuestManager extends BaseManager {
 
 export class ClanManager extends BaseManager {
 	private constructor(client: Client);
-	public fetch(id: string, page: number, count: number): Promise<Object>;
+	public fetch(id: string, page?: number, count?: number): Promise<Object>;
 }
 
 export class CharacterData {
