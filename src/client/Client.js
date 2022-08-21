@@ -93,15 +93,17 @@ class Client {
 	 */
 	login(username, password) {
 		this.ready = false;
-		this.steamUser.logOn({ accountName: username, password: password });
-		this.steamUser.on('debug', debug => {
-			console.log(debug);
+		return new Promise(() => {
+			this.steamUser.logOn({ accountName: username, password: password });
+			this.steamUser.on('error', error => {
+				throw new Error(error);
+			});
+			this.steamUser.on('loggedOn', async () => {
+				await this._getAccessToken();
+			});
+			this.ready = true;
+			return this.accessToken;
 		});
-		this.steamUser.on('loggedOn', async () => {
-			await this._getAccessToken();
-		});
-		this.ready = true;
-		return this.accessToken;
 	}
 
 	/**
