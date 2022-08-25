@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+# [2.1.0] - 2022-08-25
+
+## Bug Fixes
+
+- Fix Steam auth ([47ef918](https://github.com/ElijahPepe/multiversus.js/commit/47ef91882a2a83f0f6e5d9ee3bbb4b7787be830c))
+
+## Miscellaneous Tasks
+
+- Update JSDoc defs ([e620c88](https://github.com/ElijahPepe/multiversus.js/commit/e620c88a8fef0f80d7fe55732c997f639c6605de))
+- Updating typings ([a7701cd](https://github.com/ElijahPepe/multiversus.js/commit/a7701cda35d6417bf700e5569a5682bff92d790b))
+
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
 # [2.0.1] - 2022-08-20
 
 ## Miscellaneous Tasks
