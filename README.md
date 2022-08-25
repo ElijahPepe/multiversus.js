@@ -36,7 +36,7 @@ Alternatively, initialize the client as follows, using a pre-existing access tok
 
 ```js
 const { Client } = require('multiversus.js');
-const client = new Client({ 'accessToken' });
+const client = new Client({ accessToken: 'accessToken' });
 ```
 
 Get the MultiVersus 2v2 leaderboard:
