@@ -8,11 +8,11 @@ const { fetchData, handleData } = require('../util/Data.js');
  */
 class LeaderboardManager extends BaseManager {
 	/**
-   * Types of leaderboards to use in a LeaderboardManager.
-   * - `1v1`
-   * - `2v2`
-   * @typedef {string} LeaderboardTypes
-   */
+	 * Types of leaderboards to use in a LeaderboardManager.
+	 * - `1v1`
+	 * - `2v2`
+	 * @typedef {string} LeaderboardTypes
+	 */
 
 	/**
 	 * Obtains the leaderboard from MultiVersus

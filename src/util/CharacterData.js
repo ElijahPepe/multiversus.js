@@ -109,7 +109,7 @@ class CharacterData {
 		displayName: 'Rick Sanchez',
 		aliases: ['Rick'],
 	};
-	
+
 	static Morty = {
 		id: 'character_c019',
 		displayName: 'Morty',
