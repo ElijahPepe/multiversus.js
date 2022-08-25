@@ -1,5 +1,7 @@
 /* eslint-disable no-async-promise-executor */
 const BaseManager = require('./BaseManager');
+const Profile = require('../structures/Profile');
+const Search = require('../structures/Search');
 const { fetchData, handleData } = require('../util/Data.js');
 
 /**
@@ -12,7 +14,7 @@ class ProfileManager extends BaseManager {
 	 * @param {string} username The username to search for
 	 * @param {limit?} limit The number of entries
 	 * @param {string?} cursor The cursor
-	 * @returns {Promise<SearchResponse>}
+	 * @returns {Promise<Search>}
 	 */
 	search(username, limit = 25, cursor = null) {
 		return new Promise(async (resolve, reject) => {
@@ -25,14 +27,14 @@ class ProfileManager extends BaseManager {
 				}`,
 				accessToken: this.client.accessToken,
 			});
-			handleData(data, resolve, reject);
+			handleData(new Search(this.client, data), resolve, reject);
 		});
 	}
 
 	/**
 	 * Obtains a user from MultiVersus
 	 * @param {string} id The ID of the user to fetch
-	 * @returns {Promise<ProfileResponse>}
+	 * @returns {Promise<Profile>}
 	 */
 	fetch(id) {
 		return new Promise(async (resolve, reject) => {
@@ -43,7 +45,7 @@ class ProfileManager extends BaseManager {
 				url: `/profiles/${id}`,
 				accessToken: this.client.accessToken,
 			});
-			handleData(data, resolve, reject);
+			handleData(new Profile(this.client, data), resolve, reject);
 		});
 	}
 }

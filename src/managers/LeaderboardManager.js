@@ -8,8 +8,15 @@ const { fetchData, handleData } = require('../util/Data.js');
  */
 class LeaderboardManager extends BaseManager {
 	/**
+   * Types of leaderboards to use in a LeaderboardManager.
+   * - `1v1`
+   * - `2v2`
+   * @typedef {string} LeaderboardTypes
+   */
+
+	/**
 	 * Obtains the leaderboard from MultiVersus
-	 * @param {LeaderboardType} type The type of leaderboard to fetch
+	 * @param {LeaderboardTypes} type The type of leaderboard to fetch
 	 * @returns {Promise<Object>}
 	 */
 	fetch(type) {
@@ -27,7 +34,7 @@ class LeaderboardManager extends BaseManager {
 
 	/**
 	 * Obtains a character leaderboard from MultiVersus
-	 * @param {LeaderboardType} type The type of leaderboard to fetch
+	 * @param {LeaderboardTypes} type The type of leaderboard to fetch
 	 * @param {string} character The character leaderboard to fetch
 	 * @returns {Promise<Object>}
 	 */
@@ -50,7 +57,7 @@ class LeaderboardManager extends BaseManager {
 	/**
 	 * Obtains a user's score and rank from MultiVersus
 	 * @param {string} id The ID of the user to fetch
-	 * @param {LeaderboardType} type The type of leaderboard to fetch
+	 * @param {LeaderboardTypes} type The type of leaderboard to fetch
 	 * @returns {Promise<Object>}
 	 */
 	fetchProfile(id, type) {
@@ -72,7 +79,7 @@ class LeaderboardManager extends BaseManager {
 	/**
 	 * Obtains a user's score and rank in a character leaderboard from MultiVersus
 	 * @param {string} id The ID of the user to fetch
-	 * @param {LeaderboardType} type The type of leaderboard to fetch
+	 * @param {LeaderboardTypes} type The type of leaderboard to fetch
 	 * @param {string} character The character leaderboard to fetch
 	 * @returns {Promise<Object>}
 	 */
