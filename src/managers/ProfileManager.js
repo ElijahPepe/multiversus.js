@@ -27,7 +27,11 @@ class ProfileManager extends BaseManager {
 				}`,
 				accessToken: this.client.accessToken,
 			});
-			handleData(new Search(this.client, data), resolve, reject);
+			if (data.msg) {
+				return reject(new Error(data.msg));
+			} else {
+				handleData(new Search(this.client, data), resolve, reject);
+			}
 		});
 	}
 
@@ -45,7 +49,11 @@ class ProfileManager extends BaseManager {
 				url: `/profiles/${id}`,
 				accessToken: this.client.accessToken,
 			});
-			handleData(new Profile(this.client, data), resolve, reject);
+			if (data.msg) {
+				return reject(new Error(data.msg));
+			} else {
+				handleData(new Profile(this.client, data), resolve, reject);
+			}
 		});
 	}
 }

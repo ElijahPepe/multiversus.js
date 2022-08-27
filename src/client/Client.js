@@ -1,4 +1,5 @@
 /* eslint-disable no-async-promise-executor */
+const { EventEmitter } = require('node:events');
 const process = require('node:process');
 const SteamUser = require('steam-user');
 const AccountManager = require('../managers/AccountManager');
@@ -10,19 +11,23 @@ const ProfileManager = require('../managers/ProfileManager');
 const QuestManager = require('../managers/QuestManager');
 const { apiKey, userAgent } = require('../util/Constants.js');
 const { fetchData, handleData } = require('../util/Data');
+const Events = require('../util/Events');
 
 /**
  * The base client for interacting with the MultiVersus API.
  */
-class Client {
+class Client extends EventEmitter {
 	/**
 	 * @param {ClientOptions} options Options for the client
 	 */
 	constructor(options = {}) {
+    super({ captureRejections: true });
 		Object.defineProperty(this, 'accessToken', { writable: true });
 		if (options?.accessToken) {
+			this.client.emit(Events.ClientReady, this.client);
 			this.accessToken = options?.accessToken;
 		} else if (!this.accessToken && 'MULTIVERSUS_ACCESS_TOKEN' in process.env) {
+			this.client.emit(Events.ClientReady, this.client);
 			this.accessToken = process.env.MULTIVERSUS_ACCESS_TOKEN;
 		} else {
 			this.accessToken = null;
@@ -91,19 +96,16 @@ class Client {
 	 * @example
 	 * client.login('username', 'password');
 	 */
-	login(username, password) {
+	async login(username, password) {
 		this.ready = false;
-		return new Promise(() => {
-			this.steamUser.logOn({ accountName: username, password: password });
-			this.steamUser.on('error', error => {
-				throw new Error(error);
-			});
-			this.steamUser.on('loggedOn', async () => {
-				await this._getAccessToken();
-			});
-			this.ready = true;
+		this.emit(Events.Debug, `Provided client info username as ${username} and password as ${password}`);
+		try {
+			await this.getAccessToken(username, password);
 			return this.accessToken;
-		});
+		} catch (error) {
+			this.destroy();
+			throw error;
+		}
 	}
 
 	/**
@@ -114,18 +116,38 @@ class Client {
 		return this.ready;
 	}
 
-	_getAccessToken() {
+	/**
+	 * Gets an access token for a user
+	 * @param {string} username Username of the account to log in with
+	 * @param {string} password Password of the account to log in with
+	 * @private
+	 * @returns {Promise<void>} A promise that either resolves the client or rejects it
+	 * @example
+	 * client.login('username', 'password');
+	 */
+	getAccessToken(username, password) {
+		if (this.ready) {
+			return Promise.resolve();
+		}
 		return new Promise(resolve => {
-			this.steamUser.getEncryptedAppTicket(1818750, async (err, appTicket) => {
-				this.steamTicket = appTicket.toString('hex').toUpperCase();
-				if (err) {
-					throw new Error(err);
-				}
+			this.emit(Events.Debug, 'Preparing to connect to Steam...');
+			this.steamUser.logOn({ accountName: username, password });
+			this.steamUser.once('loggedOn', async () => {
+				await this.steamUser.getEncryptedAppTicket(1818750, async (err, appTicket) => {
+					this.steamTicket = appTicket.toString('hex').toUpperCase();
+					if (err) {
+						throw new Error(err);
+					}
 
-				const data = await this.info(appTicket.toString('hex').toUpperCase());
-				this.accessToken = data.token;
+					const data = await this.info(appTicket.toString('hex').toUpperCase());
+					this.ready = true;
+					this.accessToken = data.token;
+					this.steamUser.removeAllListeners();
 
-				resolve(this);
+					this.client.emit(Events.ClientReady, this.client);
+
+					resolve(this);
+				});
 			});
 		});
 	}
@@ -185,4 +207,10 @@ module.exports = Client;
  * Client options.
  * @typedef {Object} ClientOptions
  * @property {string} [accessToken] The access token of the user
+ */
+
+/**
+ * Emitted for general debugging information.
+ * @event Client#debug
+ * @param {string} info The debug information
  */

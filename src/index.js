@@ -5,6 +5,7 @@ exports.Client = require('./client/Client');
 exports.CharacterData = require('./util/CharacterData');
 exports.Constants = require('./util/Constants');
 exports.Data = require('./util/Data');
+exports.Events = require('./util/Events');
 
 // Managers
 exports.AccountManager = require('./managers/AccountManager');
