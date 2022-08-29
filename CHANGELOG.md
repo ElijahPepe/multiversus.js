@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+# [2.1.1] - 2022-08-29
+
+## Bug Fixes
+
+- Fix Steam auth, emit events, fix profiles ([c6de14b](https://github.com/ElijahPepe/multiversus.js/commit/c6de14b157e29fe82a9ddbed33ca7d8fbb08b4e3))
+
+## Miscellaneous Tasks
+
+- Refactor data flow ([44c11e0](https://github.com/ElijahPepe/multiversus.js/commit/44c11e09015a912beeb27de8cffabf30e7b72267))
+
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
 # [2.1.0] - 2022-08-25
 
 ## Bug Fixes
