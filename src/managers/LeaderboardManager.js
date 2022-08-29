@@ -1,6 +1,7 @@
 /* eslint-disable no-async-promise-executor */
 const BaseManager = require('./BaseManager');
-const { fetchData, handleData } = require('../util/Data.js');
+const { handleData } = require('../util/Data.js');
+const Routes = require('../util/Routes');
 
 /**
  * Manages API methods for leaderboards
@@ -24,10 +25,7 @@ class LeaderboardManager extends BaseManager {
 			if (type !== '2v2' && type !== '1v1') {
 				return reject(new Error('Leaderboard type must be 1v1 or 2v2.'));
 			}
-			const data = await fetchData({
-				url: `/leaderboards/${type}/show`,
-				accessToken: this.client.accessToken,
-			});
+			const data = await this.client.rest.get(Routes.leaderboard(type));
 			handleData(data, resolve, reject);
 		});
 	}
@@ -46,10 +44,7 @@ class LeaderboardManager extends BaseManager {
 			if (!character) {
 				return reject(new Error('A character must be provided.'));
 			}
-			const data = await fetchData({
-				url: `/leaderboards/${character}_${type}/show`,
-				accessToken: this.client.accessToken,
-			});
+			const data = await this.client.rest.get(Routes.leaderboardCharacter(type, character));
 			handleData(data, resolve, reject);
 		});
 	}
@@ -68,10 +63,7 @@ class LeaderboardManager extends BaseManager {
 			if (!id) {
 				return reject(new Error('A user ID must be provided.'));
 			}
-			const data = await fetchData({
-				url: `/leaderboards/${type}/score-and-rank/${id}`,
-				accessToken: this.client.accessToken,
-			});
+			const data = await this.client.rest.get(Routes.leaderboardProfile(id, type));
 			handleData(data, resolve, reject);
 		});
 	}
@@ -94,10 +86,7 @@ class LeaderboardManager extends BaseManager {
 			if (!character) {
 				return reject(new Error('A character must be provided.'));
 			}
-			const data = await fetchData({
-				url: `/leaderboards/${character}_${type}/score-and-rank/${id}`,
-				accessToken: this.client.accessToken,
-			});
+			const data = await this.client.rest.get(Routes.fetchProfileCharacter(id, type, character));
 			handleData(data, resolve, reject);
 		});
 	}

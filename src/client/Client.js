@@ -9,9 +9,11 @@ const LeaderboardManager = require('../managers/LeaderboardManager');
 const MatchManager = require('../managers/MatchManager');
 const ProfileManager = require('../managers/ProfileManager');
 const QuestManager = require('../managers/QuestManager');
+const RESTManager = require('../managers/RESTManager');
 const { apiKey, userAgent } = require('../util/Constants.js');
-const { fetchData, handleData } = require('../util/Data');
+const { handleData } = require('../util/Data');
 const Events = require('../util/Events');
+const Routes = require('../util/Routes');
 
 /**
  * The base client for interacting with the MultiVersus API.
@@ -24,10 +26,10 @@ class Client extends EventEmitter {
     super({ captureRejections: true });
 		Object.defineProperty(this, 'accessToken', { writable: true });
 		if (options?.accessToken) {
-			this.client.emit(Events.ClientReady, this.client);
+			this.emit(Events.ClientReady, this.client);
 			this.accessToken = options?.accessToken;
 		} else if (!this.accessToken && 'MULTIVERSUS_ACCESS_TOKEN' in process.env) {
-			this.client.emit(Events.ClientReady, this.client);
+			this.emit(Events.ClientReady, this.client);
 			this.accessToken = process.env.MULTIVERSUS_ACCESS_TOKEN;
 		} else {
 			this.accessToken = null;
@@ -86,6 +88,12 @@ class Client extends EventEmitter {
 		 * @type {ClanManager}
 		 */
 		this.clans = new ClanManager(this);
+
+		/**
+		 * The REST manager of the client
+		 * @type {RESTManager}
+		 */
+		this.rest = new RESTManager(this);
 	}
 
 	/**
@@ -177,10 +185,9 @@ class Client extends EventEmitter {
 			if (!steamTicket && !this.steamTicket) {
 				throw new Error('A Steam ticket must be provided.');
 			}
-			const data = await fetchData({
-				url: `/access`,
-				method: 'POST',
-				body: JSON.stringify({
+			const data = await this.rest.post(
+				Routes.access(),
+				JSON.stringify({
 					auth: { fail_on_missing: true, steam: this.steamTicket ? this.steamTicket : steamTicket },
 					options: [
 						'configuration',
@@ -192,8 +199,7 @@ class Client extends EventEmitter {
 						'wb_network',
 					],
 				}),
-				accessToken: false,
-			});
+			);
 			handleData(data, resolve, reject);
 			this.user = data;
 			return this.user;

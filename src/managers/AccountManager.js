@@ -1,6 +1,7 @@
 /* eslint-disable no-async-promise-executor */
 const BaseManager = require('./BaseManager');
-const { fetchData, handleData } = require('../util/Data.js');
+const { handleData } = require('../util/Data.js');
+const Routes = require('../util/Routes');
 
 /**
  * Manages API methods for accounts
@@ -17,10 +18,7 @@ class AccountManager extends BaseManager {
 			if (!id) {
 				throw new Error('A user ID must be provided.');
 			}
-			const data = await fetchData({
-				url: `/accounts/${id}`,
-				accessToken: this.client.accessToken,
-			});
+			const data = await this.client.rest.get(Routes.user(id));
 			handleData(data, resolve, reject);
 		});
 	}

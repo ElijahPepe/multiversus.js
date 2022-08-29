@@ -2,7 +2,8 @@
 const BaseManager = require('./BaseManager');
 const Profile = require('../structures/Profile');
 const Search = require('../structures/Search');
-const { fetchData, handleData } = require('../util/Data.js');
+const { handleData } = require('../util/Data.js');
+const Routes = require('../util/Routes');
 
 /**
  * Manages API methods for profiles
@@ -21,12 +22,7 @@ class ProfileManager extends BaseManager {
 			if (!username) {
 				throw new Error('A query must be provided.');
 			}
-			const data = await fetchData({
-				url: `/profiles/search_queries/get-by-username/run?username=${username}&limit=${limit}${
-					cursor ? `&cursor=${cursor}` : ''
-				}`,
-				accessToken: this.client.accessToken,
-			});
+			const data = await this.client.rest.get(Routes.profileSearch(username, limit, cursor));
 			if (data.msg) {
 				return reject(new Error(data.msg));
 			} else {
@@ -45,10 +41,7 @@ class ProfileManager extends BaseManager {
 			if (!id) {
 				throw new Error('A user ID must be provided.');
 			}
-			const data = await fetchData({
-				url: `/profiles/${id}`,
-				accessToken: this.client.accessToken,
-			});
+			const data = await this.client.rest.get(Routes.profile(id));
 			if (data.msg) {
 				return reject(new Error(data.msg));
 			} else {
