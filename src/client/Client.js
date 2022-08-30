@@ -1,4 +1,3 @@
-/* eslint-disable no-async-promise-executor */
 const { EventEmitter } = require('node:events');
 const process = require('node:process');
 const SteamUser = require('steam-user');
@@ -26,10 +25,10 @@ class Client extends EventEmitter {
     super({ captureRejections: true });
 		Object.defineProperty(this, 'accessToken', { writable: true });
 		if (options?.accessToken) {
-			this.emit(Events.ClientReady, this.client);
+			this.emit(Events.ClientReady, this);
 			this.accessToken = options?.accessToken;
 		} else if (!this.accessToken && 'MULTIVERSUS_ACCESS_TOKEN' in process.env) {
-			this.emit(Events.ClientReady, this.client);
+			this.emit(Events.ClientReady, this);
 			this.accessToken = process.env.MULTIVERSUS_ACCESS_TOKEN;
 		} else {
 			this.accessToken = null;
@@ -152,7 +151,7 @@ class Client extends EventEmitter {
 					this.accessToken = data.token;
 					this.steamUser.removeAllListeners();
 
-					this.client.emit(Events.ClientReady, this.client);
+					this.emit(Events.ClientReady, this);
 
 					resolve(this);
 				});
@@ -181,6 +180,7 @@ class Client extends EventEmitter {
 	 * client.info('steamTicket');
 	 */
 	info(steamTicket) {
+		// eslint-disable-next-line no-async-promise-executor
 		return new Promise(async (resolve, reject) => {
 			if (!steamTicket && !this.steamTicket) {
 				throw new Error('A Steam ticket must be provided.');
