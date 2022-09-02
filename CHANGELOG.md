@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+# [2.1.2] - 2022-09-02
+
+## Bug Fixes
+
+- Fix Steam auth, implement steam-totp support ([ffafaa6](https://github.com/ElijahPepe/multiversus.js/commit/ffafaa6c1c60adcaa427cf962cd469864a081b5f))
+- Properly emit events ([1618a0f](https://github.com/ElijahPepe/multiversus.js/commit/1618a0f5e80c9a9e4f849e28143e4a6b157d2f54))
+
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
 # [2.1.1] - 2022-08-29
 
 ## Bug Fixes
