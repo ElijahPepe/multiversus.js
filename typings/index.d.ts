@@ -1,6 +1,7 @@
+import { EventEmitter } from 'node:events';
 import SteamUser from 'steam-user';
 
-export class Client {
+export class Client extends EventEmitter {
 	public constructor(options: ClientOptions);
 	private _getAccessToken(): Promise<void>;
 
