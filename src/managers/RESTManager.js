@@ -44,8 +44,8 @@ class RESTManager extends BaseManager {
 			'x-hydra-user-agent': userAgent,
 			'Content-Type': 'application/json',
 		};
-		const res = await request(base + url, { headers, body });
-		return res;
+		const res = await request(base + url, { method: 'POST', headers, body });
+		return JSON.parse(res.body._readableState.buffer.head.data);
 	}
 }
 

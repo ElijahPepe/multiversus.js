@@ -1,5 +1,6 @@
 const { EventEmitter } = require('node:events');
 const process = require('node:process');
+const SteamTotp = require('steam-totp');
 const SteamUser = require('steam-user');
 const AccountManager = require('../managers/AccountManager');
 const BattlepassManager = require('../managers/BattlepassManager');
@@ -99,15 +100,21 @@ class Client extends EventEmitter {
 	 * Creates an access token, allowing you to access the MultiVersus API.
 	 * @param {string} username Username of the account to log in with
 	 * @param {string} password Password of the account to log in with
+	 * @param {string?} token The account's Steam secret
 	 * @returns {Promise<string>} The access token
 	 * @example
 	 * client.login('username', 'password');
 	 */
-	async login(username, password) {
+	async login(username, password, token) {
 		this.ready = false;
 		this.emit(Events.Debug, `Provided client info username as ${username} and password as ${password}`);
+
+		let code;
+		if (token) {
+			code = SteamTotp.generateAuthCode(token);
+		}
 		try {
-			await this.getAccessToken(username, password);
+			await this.getAccessToken(username, password, code);
 			return this.accessToken;
 		} catch (error) {
 			this.destroy();
@@ -127,18 +134,24 @@ class Client extends EventEmitter {
 	 * Gets an access token for a user
 	 * @param {string} username Username of the account to log in with
 	 * @param {string} password Password of the account to log in with
+	 * @param {string?} code The account's Steam two-factor authentication code
 	 * @private
 	 * @returns {Promise<void>} A promise that either resolves the client or rejects it
 	 * @example
 	 * client.login('username', 'password');
 	 */
-	getAccessToken(username, password) {
+	getAccessToken(username, password, code) {
 		if (this.ready) {
 			return Promise.resolve();
 		}
 		return new Promise(resolve => {
 			this.emit(Events.Debug, 'Preparing to connect to Steam...');
 			this.steamUser.logOn({ accountName: username, password });
+			if (code) {
+				this.steamUser.once('steamGuard', (_, callback) => {
+					callback(code);
+				});
+			}
 			this.steamUser.once('loggedOn', async () => {
 				await this.steamUser.getEncryptedAppTicket(1818750, async (err, appTicket) => {
 					this.steamTicket = appTicket.toString('hex').toUpperCase();

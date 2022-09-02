@@ -22,6 +22,7 @@
 	},
 	"homepage": "https://multiversus.js.org",
 	"dependencies": {
+		"steam-totp": "^2.1.2",
 		"steam-user": "^4.24.6",
 		"undici": "^5.8.0"
 	},
