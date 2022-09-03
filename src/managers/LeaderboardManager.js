@@ -86,7 +86,7 @@ class LeaderboardManager extends BaseManager {
 			if (!character) {
 				return reject(new Error('A character must be provided.'));
 			}
-			const data = await this.client.rest.get(Routes.fetchProfileCharacter(id, type, character));
+			const data = await this.client.rest.get(Routes.leaderboardProfileCharacter(id, type, character));
 			handleData(data, resolve, reject);
 		});
 	}
