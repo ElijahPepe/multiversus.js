@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+# [2.1.3] - 2022-09-03
+
+## Miscellaneous Tasks
+
+- Remove handleData, refactor data flow ([31efdc9](https://github.com/ElijahPepe/multiversus.js/commit/31efdc9f5ac44c1b29b41b59a24d1c468a2512b3))
+
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
 # [2.1.2] - 2022-09-02
 
 ## Bug Fixes
