@@ -14,7 +14,7 @@ export class Client extends EventEmitter {
 	public info(steamTicket: string): Promise<Object>;
 	public isReady(): this is Client;
 	public leaderboards: LeaderboardManager;
-	public login(username: string, password: string): Promise<string>;
+	public login(username: string, password: string, token: string | null): Promise<string>;
 	public matches: MatchManager;
 	public profiles: ProfileManager;
 	public ready: boolean;
