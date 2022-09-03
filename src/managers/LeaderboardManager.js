@@ -1,6 +1,4 @@
-/* eslint-disable no-async-promise-executor */
 const BaseManager = require('./BaseManager');
-const { handleData } = require('../util/Data.js');
 const Routes = require('../util/Routes');
 
 /**
@@ -20,14 +18,12 @@ class LeaderboardManager extends BaseManager {
 	 * @param {LeaderboardTypes} type The type of leaderboard to fetch
 	 * @returns {Promise<Object>}
 	 */
-	fetch(type) {
-		return new Promise(async (resolve, reject) => {
-			if (type !== '2v2' && type !== '1v1') {
-				return reject(new Error('Leaderboard type must be 1v1 or 2v2.'));
-			}
-			const data = await this.client.rest.get(Routes.leaderboard(type));
-			handleData(data, resolve, reject);
-		});
+	async fetch(type) {
+		if (type !== '2v2' && type !== '1v1') {
+			throw new Error('Leaderboard type must be 1v1 or 2v2.');
+		}
+		const data = await this.client.rest.get(Routes.leaderboard(type));
+		return data;
 	}
 
 	/**
@@ -36,17 +32,15 @@ class LeaderboardManager extends BaseManager {
 	 * @param {string} character The character leaderboard to fetch
 	 * @returns {Promise<Object>}
 	 */
-	fetchCharacter(type, character) {
-		return new Promise(async (resolve, reject) => {
-			if (type !== '2v2' && type !== '1v1') {
-				return reject(new Error('Leaderboard type must be 1v1 or 2v2.'));
-			}
-			if (!character) {
-				return reject(new Error('A character must be provided.'));
-			}
-			const data = await this.client.rest.get(Routes.leaderboardCharacter(type, character));
-			handleData(data, resolve, reject);
-		});
+	async fetchCharacter(type, character) {
+		if (type !== '2v2' && type !== '1v1') {
+			throw new Error('Leaderboard type must be 1v1 or 2v2.');
+		}
+		if (!character) {
+			throw new Error('A character must be provided.');
+		}
+		const data = await this.client.rest.get(Routes.leaderboardCharacter(type, character));
+		return data;
 	}
 
 	/**
@@ -55,17 +49,15 @@ class LeaderboardManager extends BaseManager {
 	 * @param {LeaderboardTypes} type The type of leaderboard to fetch
 	 * @returns {Promise<Object>}
 	 */
-	fetchProfile(id, type) {
-		return new Promise(async (resolve, reject) => {
-			if (type !== '2v2' && type !== '1v1') {
-				return reject(new Error('Leaderboard type must be 1v1 or 2v2.'));
-			}
-			if (!id) {
-				return reject(new Error('A user ID must be provided.'));
-			}
-			const data = await this.client.rest.get(Routes.leaderboardProfile(id, type));
-			handleData(data, resolve, reject);
-		});
+	async fetchProfile(id, type) {
+		if (type !== '2v2' && type !== '1v1') {
+			throw new Error('Leaderboard type must be 1v1 or 2v2.');
+		}
+		if (!id) {
+			throw new Error('A user ID must be provided.');
+		}
+		const data = await this.client.rest.get(Routes.leaderboardProfile(id, type));
+		return data;
 	}
 
 	/**
@@ -75,20 +67,18 @@ class LeaderboardManager extends BaseManager {
 	 * @param {string} character The character leaderboard to fetch
 	 * @returns {Promise<Object>}
 	 */
-	fetchProfileCharacter(id, type, character) {
-		return new Promise(async (resolve, reject) => {
-			if (type !== '2v2' && type !== '1v1') {
-				return reject(new Error('Leaderboard type must be 1v1 or 2v2.'));
-			}
-			if (!id) {
-				return reject(new Error('A user ID must be provided.'));
-			}
-			if (!character) {
-				return reject(new Error('A character must be provided.'));
-			}
-			const data = await this.client.rest.get(Routes.leaderboardProfileCharacter(id, type, character));
-			handleData(data, resolve, reject);
-		});
+	async fetchProfileCharacter(id, type, character) {
+		if (type !== '2v2' && type !== '1v1') {
+			throw new Error('Leaderboard type must be 1v1 or 2v2.');
+		}
+		if (!id) {
+			throw new Error('A user ID must be provided.');
+		}
+		if (!character) {
+			throw new Error('A character must be provided.');
+		}
+		const data = await this.client.rest.get(Routes.leaderboardProfileCharacter(id, type, character));
+		return data;
 	}
 }
 

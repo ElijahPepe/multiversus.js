@@ -1,6 +1,4 @@
-/* eslint-disable no-async-promise-executor */
 const BaseManager = require('./BaseManager');
-const { handleData } = require('../util/Data.js');
 const Routes = require('../util/Routes');
 
 /**
@@ -16,14 +14,12 @@ class ClanManager extends BaseManager {
 	 * @param {number?} count The number of entries
 	 * @returns {Promise<Object>}
 	 */
-	fetch(id, page = 1, count = 25) {
-		return new Promise(async (resolve, reject) => {
-			if (!id) {
-				return reject(new Error('A user ID must be provided.'));
-			}
-			const data = await this.client.rest.get(Routes.clan(id, page, count));
-			handleData(data, resolve, reject);
-		});
+	async fetch(id, page = 1, count = 25) {
+		if (!id) {
+			throw new Error('A user ID must be provided.');
+		}
+		const data = await this.client.rest.get(Routes.clan(id, page, count));
+		return data;
 	}
 }
 

@@ -11,7 +11,6 @@ const ProfileManager = require('../managers/ProfileManager');
 const QuestManager = require('../managers/QuestManager');
 const RESTManager = require('../managers/RESTManager');
 const { apiKey, userAgent } = require('../util/Constants.js');
-const { handleData } = require('../util/Data');
 const Events = require('../util/Events');
 const Routes = require('../util/Routes');
 
@@ -192,31 +191,27 @@ class Client extends EventEmitter {
 	 * @example
 	 * client.info('steamTicket');
 	 */
-	info(steamTicket) {
-		// eslint-disable-next-line no-async-promise-executor
-		return new Promise(async (resolve, reject) => {
-			if (!steamTicket && !this.steamTicket) {
-				throw new Error('A Steam ticket must be provided.');
-			}
-			const data = await this.rest.post(
-				Routes.access(),
-				JSON.stringify({
-					auth: { fail_on_missing: true, steam: this.steamTicket ? this.steamTicket : steamTicket },
-					options: [
-						'configuration',
-						'achievements',
-						'account',
-						'profile',
-						'notifications',
-						'maintenance',
-						'wb_network',
-					],
-				}),
-			);
-			handleData(data, resolve, reject);
-			this.user = data;
-			return this.user;
-		});
+	async info(steamTicket) {
+		if (!steamTicket && !this.steamTicket) {
+			throw new Error('A Steam ticket must be provided.');
+		}
+		const data = await this.rest.post(
+			Routes.access(),
+			JSON.stringify({
+				auth: { fail_on_missing: true, steam: this.steamTicket ? this.steamTicket : steamTicket },
+				options: [
+					'configuration',
+					'achievements',
+					'account',
+					'profile',
+					'notifications',
+					'maintenance',
+					'wb_network',
+				],
+			}),
+		);
+		this.user = data;
+		return this.user;
 	}
 }
 
