@@ -175,13 +175,13 @@ class Client extends EventEmitter {
 	 * Destroys the client and logs out of Steam gracefully.
 	 * @returns {void}
 	 */
-	destroy() {
-		super.destroy();
-
+	async destroy() {
 		if (this.steamTicket) {
 			this.SteamUser.logOff();
 		}
+		await this.rest.delete(Routes.access());
 		this.accessToken = null;
+		this.destroy();
 	}
 
 	/**

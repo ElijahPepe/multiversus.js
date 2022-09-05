@@ -3,6 +3,7 @@ const Routes = {
 		/**
 	 		* Route for:
 	 		* - POST   `/access`
+	 		* - DELETE `/access`
 	 		*
 	 		* @returns {string}
 	 		*/

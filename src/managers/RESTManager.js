@@ -72,6 +72,17 @@ class RESTManager extends BaseManager {
 		const response = await this.request(url, { method: 'POST', body });
 		return this.parseResponse(response);
 	}
+
+	/**
+	 * DELETEs a URL
+	 * @param {string} url The URL to DELETE to
+	 * @param {boolean?} accessToken If an access token should be supplied
+	 * @returns {Dispatcher.ResponseData}
+	 */
+	async delete(url, accessToken = true) {
+		const response = await this.request(url, { method: 'DELETE', accessToken });
+		return this.parseResponse(response);
+	}
 }
 
 module.exports = RESTManager;
