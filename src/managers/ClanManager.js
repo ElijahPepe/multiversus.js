@@ -12,7 +12,7 @@ class ClanManager extends BaseManager {
 	 * @param {string} id The ID of the user to fetch
 	 * @param {number?} page The page
 	 * @param {number?} count The number of entries
-	 * @returns {Promise<Object>}
+	 * @returns {Promise<any>}
 	 */
 	async fetch(id, page = 1, count = 25) {
 		if (!id) {

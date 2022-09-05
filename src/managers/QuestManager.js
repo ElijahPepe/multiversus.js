@@ -9,7 +9,7 @@ class QuestManager extends BaseManager {
 	/**
 	 * Obtains quest info from MultiVersus
 	 * @param {string} id The ID of the user to fetch
-	 * @returns {Promise<Object>}
+	 * @returns {Promise<any>}
 	 */
 	async fetch(id) {
 		if (!id) {

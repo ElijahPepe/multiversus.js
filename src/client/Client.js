@@ -187,7 +187,7 @@ class Client extends EventEmitter {
 	/**
 	 * Gets info about a Steam user
 	 * @param {string} steamTicket Steam ticket of the user to log in with
-	 * @returns {Promise<Object>} The info
+	 * @returns {Promise<any>} The info
 	 * @example
 	 * client.info('steamTicket');
 	 */

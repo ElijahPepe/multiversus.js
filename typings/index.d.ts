@@ -11,7 +11,7 @@ export class Client extends EventEmitter {
 	public battlepasses: BattlepassManager;
 	public clans: ClanManager;
 	public destroy(): void;
-	public info(steamTicket: string): Promise<Object>;
+	public info(steamTicket: string): Promise<any>;
 	public isReady(): this is Client;
 	public leaderboards: LeaderboardManager;
 	public login(username: string, password: string, token: string | null): Promise<string>;
@@ -41,36 +41,36 @@ export class ProfileManager extends BaseManager {
 
 export class MatchManager extends BaseManager {
 	private constructor(client: Client);
-	public fetch(id: string): Promise<Object>;
-	public fetchAll(id: string, page: number): Promise<Object>;
+	public fetch(id: string): Promise<any>;
+	public fetchAll(id: string, page: number): Promise<any>;
 }
 
 export class AccountManager extends BaseManager {
 	private constructor(client: Client);
-	public fetch(id: string): Promise<Object>;
+	public fetch(id: string): Promise<any>;
 }
 
 export class LeaderboardManager extends BaseManager {
 	private constructor(client: Client);
-	public fetch(type: string): Promise<Object>;
-	public fetchCharacter(type: string, character: string): Promise<Object>;
-	public fetchProfile(id: string, type: string): Promise<Object>;
-	public fetchProfileCharacter(id: string, type: string, character: string): Promise<Object>;
+	public fetch(type: string): Promise<any>;
+	public fetchCharacter(type: string, character: string): Promise<any>;
+	public fetchProfile(id: string, type: string): Promise<any>;
+	public fetchProfileCharacter(id: string, type: string, character: string): Promise<any>;
 }
 
 export class BattlepassManager extends BaseManager {
 	private constructor(client: Client);
-	public fetch(id: string): Promise<Object>;
+	public fetch(id: string): Promise<any>;
 }
 
 export class QuestManager extends BaseManager {
 	private constructor(client: Client);
-	public fetch(id: string): Promise<Object>;
+	public fetch(id: string): Promise<any>;
 }
 
 export class ClanManager extends BaseManager {
 	private constructor(client: Client);
-	public fetch(id: string, page?: number, count?: number): Promise<Object>;
+	public fetch(id: string, page?: number, count?: number): Promise<any>;
 }
 
 export class CharacterData {
@@ -109,26 +109,26 @@ export abstract class Base {
 }
 
 export class Profile extends Base {
-  protected constructor(client: Client, data: Object);
+  protected constructor(client: Client, data: any);
 	
 	public '1v1': ModeData;
 	public '2v2': ModeData;
 	public account_id: string;
-	public aggregates: Object;
-	public calculations: Object;
+	public aggregates: any;
+	public calculations: any;
 	public created_at: string;
-	public cross_match_results: Object;
+	public cross_match_results: any;
 	public data: {
 		IsChildAccount: boolean;
 		PerkPreferences: PerkPreferences;
 		'2v2_prompt_shown': number;
 	};
 	public ffa: ModeData;
-	public files: Object[];
+	public files: any[];
 	public id: string;
 	public last_login: string;
 	public matches: ModeStats;
-	public notifications: Object;
+	public notifications: any;
 	public points: boolean | null;
 	public random_distribution: number;
 	public server_data: ServerData;
@@ -137,7 +137,7 @@ export class Profile extends Base {
 }
 
 export class Search extends Base {
-  protected constructor(client: Client, data: Object);
+  protected constructor(client: Client, data: any);
 
 	public cursor: string;
 	public start: number;
@@ -148,11 +148,11 @@ export class Search extends Base {
 
 export interface SearchResult {
 	score: number | null;
-	result: Object;
+	result: any;
 }
 
 export interface PerkPreferences {
-	Characters: Object;
+	Characters: any;
 }
 
 export interface ServerData {
@@ -162,15 +162,15 @@ export interface ServerData {
 	loss_streak: number;
 	BattlepassID: string;
 	stat_trackers: StatTrackers;
-	UnclaimedCharacterMasteryRewards: Object;
+	UnclaimedCharacterMasteryRewards: any;
 	lifetime_damage: number;
 	lifetime_ringouts: number;
 	matches_played: number;
 	sets_played: number;
-	OwnedPerks: Object;
-	'1v1shuffle': Object;
-	Characters: Object;
-	'2v2shuffle': Object;
+	OwnedPerks: any;
+	'1v1shuffle': any;
+	Characters: any;
+	'2v2shuffle': any;
 	RecentlyToasted: string[] | [];
 }
 
@@ -181,7 +181,7 @@ export interface StatTrackers {
 	TotalRingoutLeader: number;
 	TotalRingouts: number;
 	TotalWins: number;
-	character_wins: Object;
+	character_wins: any;
 	TotalDoubleRingouts: number;
 }
 

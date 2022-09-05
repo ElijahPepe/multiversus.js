@@ -9,7 +9,7 @@ class MatchManager extends BaseManager {
 	/**
 	 * Obtains match info from MultiVersus
 	 * @param {string} id The ID of the natch to fetch
-	 * @returns {Promise<Object>}
+	 * @returns {Promise<any>}
 	 */
 	async fetch(id) {
 		if (!id) {
@@ -23,7 +23,7 @@ class MatchManager extends BaseManager {
 	 * Obtains all matches from MultiVersus
 	 * @param {string} id The ID of the match to fetch
 	 * @param {number?} page The page
-	 * @returns {Promise<Object>}
+	 * @returns {Promise<any>}
 	 */
 	async fetchAll(id, page = 1) {
 		if (!id) {

@@ -16,7 +16,7 @@ class LeaderboardManager extends BaseManager {
 	/**
 	 * Obtains the leaderboard from MultiVersus
 	 * @param {LeaderboardTypes} type The type of leaderboard to fetch
-	 * @returns {Promise<Object>}
+	 * @returns {Promise<any>}
 	 */
 	async fetch(type) {
 		if (type !== '2v2' && type !== '1v1') {
@@ -30,7 +30,7 @@ class LeaderboardManager extends BaseManager {
 	 * Obtains a character leaderboard from MultiVersus
 	 * @param {LeaderboardTypes} type The type of leaderboard to fetch
 	 * @param {string} character The character leaderboard to fetch
-	 * @returns {Promise<Object>}
+	 * @returns {Promise<any>}
 	 */
 	async fetchCharacter(type, character) {
 		if (type !== '2v2' && type !== '1v1') {
@@ -47,7 +47,7 @@ class LeaderboardManager extends BaseManager {
 	 * Obtains a user's score and rank from MultiVersus
 	 * @param {string} id The ID of the user to fetch
 	 * @param {LeaderboardTypes} type The type of leaderboard to fetch
-	 * @returns {Promise<Object>}
+	 * @returns {Promise<any>}
 	 */
 	async fetchProfile(id, type) {
 		if (type !== '2v2' && type !== '1v1') {
@@ -65,7 +65,7 @@ class LeaderboardManager extends BaseManager {
 	 * @param {string} id The ID of the user to fetch
 	 * @param {LeaderboardTypes} type The type of leaderboard to fetch
 	 * @param {string} character The character leaderboard to fetch
-	 * @returns {Promise<Object>}
+	 * @returns {Promise<any>}
 	 */
 	async fetchProfileCharacter(id, type, character) {
 		if (type !== '2v2' && type !== '1v1') {
