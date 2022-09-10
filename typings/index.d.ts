@@ -93,6 +93,7 @@ export class CharacterData {
 	static LeBronJames: CharacterDataType;
 	static RickSanchez: CharacterDataType;
 	static Morty: CharacterDataType;
+	static Gizmo: CharacterDataType;
 }
 
 export interface CharacterDataType {
