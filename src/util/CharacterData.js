@@ -115,6 +115,12 @@ class CharacterData {
 		displayName: 'Morty',
 		aliases: [],
 	};
+	
+	static Gizmo = {
+		id: 'character_C023A',
+		displayName: 'Gizmo',
+		aliases: []
+	}
 }
 
 module.exports = CharacterData;
