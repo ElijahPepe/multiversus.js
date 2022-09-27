@@ -8,7 +8,7 @@ const Routes = require('../util/Routes');
 class MatchManager extends BaseManager {
 	/**
 	 * Obtains match info from MultiVersus
-	 * @param {string} id The ID of the natch to fetch
+	 * @param {string} id The ID of the match to fetch
 	 * @returns {Promise<any>}
 	 */
 	async fetch(id) {
