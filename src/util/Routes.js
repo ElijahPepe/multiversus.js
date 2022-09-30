@@ -98,7 +98,7 @@ const Routes = {
 	 		* Route for:
 	 		* - GET   `/matches/all/${id}?page=${page}`
 	 		*
-	 		* @param {string} id The ID of the match to fetch
+	 		* @param {string} id The accountID of the user
 	 		* @param {number?} page The page
 	 		* @returns {string}
 	 		*/
