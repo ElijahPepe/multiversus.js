@@ -40,23 +40,25 @@ const Routes = {
 	 		* - GET   `/leaderboards/${type}/show`
 	 		*
 	 		* @param {LeaderboardTypes} type The type of leaderboard to fetch
+			* @param {number?} page The page
 	 		* @returns {string}
 	 		*/
-		leaderboard(type) {
-			return `/leaderboards/${type}/show`;
-		},
-
-		/**
-	 		* Route for:
-	 		* - GET   `/leaderboards/${character}_${type}/show`
-	 		*
-	 		* @param {LeaderboardTypes} type The type of leaderboard to fetch
-			* @param {string} character The character leaderboard to fetch
-	 		* @returns {string}
-	 		*/
-		leaderboardCharacter(type, character) {
-			return `/leaderboards/${character}_${type}/show`;
-		},
+			 leaderboard(type, page) {
+				return `/leaderboards/${type}/show?page=${page}`;
+			},
+	
+			/**
+				 * Route for:
+				 * - GET   `/leaderboards/${character}_${type}/show`
+				 *
+				 * @param {LeaderboardTypes} type The type of leaderboard to fetch
+				* @param {string} character The character leaderboard to fetch
+				* @param {number?} page The page
+				 * @returns {string}
+				 */
+			leaderboardCharacter(type, character, page) {
+				return `/leaderboards/${character}_${type}/show?page=${page}`;
+			},
 
 		/**
 	 		* Route for:

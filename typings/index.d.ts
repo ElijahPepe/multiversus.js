@@ -52,8 +52,8 @@ export class AccountManager extends BaseManager {
 
 export class LeaderboardManager extends BaseManager {
 	private constructor(client: Client);
-	public fetch(type: string): Promise<any>;
-	public fetchCharacter(type: string, character: string): Promise<any>;
+	public fetch(type: string, page: number): Promise<Object>;
+	public fetchCharacter(type: string, character: string, page: number): Promise<Object>;
 	public fetchProfile(id: string, type: string): Promise<any>;
 	public fetchProfileCharacter(id: string, type: string, character: string): Promise<any>;
 }
