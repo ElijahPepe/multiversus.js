@@ -17,9 +17,9 @@ class LeaderboardManager extends BaseManager {
 	 * Obtains the leaderboard from MultiVersus
 	 * @param {LeaderboardTypes} type The type of leaderboard to fetch
 	 * @param {number?} page The page
-	 * @returns {Promise<Object>}
+	 * @returns {Promise<any>}
 	 */
-	 async fetch(type, page = 1) {
+	async fetch(type, page = 1) {
 		if (type !== '2v2' && type !== '1v1') {
 			throw new Error('Leaderboard type must be 1v1 or 2v2.');
 		}
@@ -32,7 +32,7 @@ class LeaderboardManager extends BaseManager {
 	 * @param {LeaderboardTypes} type The type of leaderboard to fetch
 	 * @param {string} character The character leaderboard to fetch
 	 * @param {number?} page The page
-	 * @returns {Promise<Object>}
+	 * @returns {Promise<any>}
 	 */
 	async fetchCharacter(type, character, page = 1) {
 		if (type !== '2v2' && type !== '1v1') {
