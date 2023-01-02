@@ -120,7 +120,13 @@ class CharacterData {
 		id: 'character_C023A',
 		displayName: 'Gizmo',
 		aliases: []
-	}
+	};
+
+	static BlackAdam = {
+		id: 'character_C021',
+		displayName: 'Black Adam',
+		aliases: []
+	};
 }
 
 module.exports = CharacterData;
